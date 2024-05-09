@@ -1,36 +1,92 @@
 'use client'
 import React from 'react'
 import { IoMdMailOpen } from "react-icons/io";
-import {useDropzone}from "react-dropzone"
-import { upload } from '@/lib/s3';
+import { useDropzone } from "react-dropzone"
+import { upload, getObjectUrl } from '@/lib/s3';
+import { LuLoader2 } from "react-icons/lu";
+import { useMutation } from '@tanstack/react-query';
+import axios from "axios"
+import {Routes} from "@/lib/routes/index"
+import toast from 'react-hot-toast';
 
 type Props = {
 
 }
 
-const FileUpload = (props: Props) => {
-    const {getInputProps,getRootProps}=useDropzone({
-        accept:{"application/pdf":[".pdf"]},
-        maxFiles:1,
-        onDrop:async (file)=>{
-            console.log(file);
-            await upload(file[0]);
+type FileData = {
+    filename: string,
+    filekey: string
+}
 
-        } 
+const FileUpload = (props: Props) => {
+
+    const { mutate,isPending } = useMutation({
+        mutationFn: async (data: FileData) => {
+            try {
+
+                const axiosResult=await axios.post(Routes.createchat,{
+                    filename:data.filename,
+                    filekey:data.filekey
+                })
+
+                console.log(axiosResult)
+
+              
+            }
+            catch (err) {
+                console.log(err)
+            }
+
+        }
+    });
+
+    const { getInputProps, getRootProps } = useDropzone({
+        accept: { "application/pdf": [".pdf"] },  //* Only Pdf Files Allowed
+        maxFiles: 1,                              //* One File
+        onDrop: async (file) => {
+            console.log(file);
+            const res = await upload(file[0]);
+            console.log("Data that upload function returned",res);
+
+            if (!res?.filekey || !res?.filename) {
+                console.log("Something went wrong during upload")
+                return;
+            }
+
+            mutate(res as FileData,{
+                onSuccess:(data)=>{
+                    toast.success("Successfully uploaded the file",{id:"success-1"})
+                },
+                onError:(err)=>{
+                    toast.error("Something went wrong",{id:"Mutate-error-1"})
+                    console.log(err);
+                }
+            })
+        }
+
     });
 
 
-  return (
-    <div className='p-2 bg-white rounded-xl mt-7  flex justify-center items-center'>
-        <div
-            {...getRootProps()} 
-        className='border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 w-full py-8 flex flex-col justify-center items-center'>
-            <input {...getInputProps()}/>
-            <IoMdMailOpen className='text-blue-800 w-[40px] h-[40px]' />
-            <p className='mt-2 text-sm text-slate-400'>Drop Pdf here</p>
+    return (
+        <div className='p-2 bg-white rounded-xl mt-7  flex justify-center items-center'>
+            {!isPending ?
+                <div {...getRootProps()} className='border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 w-full py-8 flex flex-col justify-center items-center min-h-[140px]'>
+                    <input {...getInputProps()} />
+                    <IoMdMailOpen className='text-blue-700 w-[40px] h-[40px]' />
+                    <p className='mt-2 text-sm text-slate-400'>Drop Pdf here</p>
+                </div>
+                :
+                <div className='border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 w-full py-8 flex flex-col justify-center items-center min-h-[140px]'>
+                    <LuLoader2 className='text-blue-700 w-[30px] h-[30px] animate-spin ' />
+                    <p className='mt-3 text-sm text-slate-400'>Spealing Tea to Gpt </p>
+                </div>
+            }
         </div>
-    </div>
-  )
+    )
 }
 
 export default FileUpload
+{/* <LuLoader2 className='text-blue-700 w-[30px] h-[30px] animate-spin ' />
+<p className='mt-3 text-sm text-slate-400'>Spealing Tea to Gpt </p> */}
+
+{/* <button className='bg-red-200 mt-3' onClick={ ()=>{ getObjectUrl("uploads/1715271645586MyTinyGuidetoShadcn,Radix,andTailwind_byMairajPirzada_Medium.pdf")}}>Click to Get Url </button> */ }
