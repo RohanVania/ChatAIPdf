@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { IoMdMailOpen } from "react-icons/io";
 import { useDropzone } from "react-dropzone"
 import { upload, getObjectUrl } from '@/lib/s3';
@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios from "axios"
 import {Routes} from "@/lib/routes/index"
 import toast from 'react-hot-toast';
+import {connectedToIndex,pinecone} from "@/lib/pinecone"
 
 type Props = {
 
@@ -18,8 +19,16 @@ type FileData = {
     filekey: string
 }
 
-const FileUpload = (props: Props) => {
-
+const FileUpload =  (props: Props) => {
+ 
+    useEffect(()=>{
+        async function Index(){
+            const r=await pinecone.listIndexes();
+            console.log(r);
+        }
+        Index();
+    },[])
+    
     const { mutate,isPending } = useMutation({
         mutationFn: async (data: FileData) => {
             try {
@@ -29,9 +38,8 @@ const FileUpload = (props: Props) => {
                     filekey:data.filekey
                 })
 
-                console.log(axiosResult)
+                console.log("Calling the Backend Api",axiosResult);
 
-              
             }
             catch (err) {
                 console.log(err)
