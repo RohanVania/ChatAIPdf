@@ -6,9 +6,9 @@ import { upload, getObjectUrl } from '@/lib/s3';
 import { LuLoader2 } from "react-icons/lu";
 import { useMutation } from '@tanstack/react-query';
 import axios from "axios"
-import {Routes} from "@/lib/routes/index"
+import { Routes } from "@/lib/routes/index"
 import toast from 'react-hot-toast';
-import {connectedToIndex,pinecone} from "@/lib/pinecone"
+import { connectedToIndex, pinecone } from "@/lib/pinecone"
 
 type Props = {
 
@@ -19,54 +19,63 @@ type FileData = {
     filekey: string
 }
 
-const FileUpload =  (props: Props) => {
- 
-    useEffect(()=>{
-        async function Index(){
-            const r=await pinecone.listIndexes();
-            console.log(r);
+const FileUpload = (props: Props) => {
+
+    useEffect(() => {
+        async function Index() {
+            const r = await pinecone.listIndexes();
+            console.log("uashdhasoiud", r);
         }
         Index();
-    },[])
-    
-    const { mutate,isPending } = useMutation({
-        mutationFn: async (data: FileData) => {
-            try {
+    }, [])
 
-                const axiosResult=await axios.post(Routes.createchat,{
-                    filename:data.filename,
-                    filekey:data.filekey
-                })
 
-                console.log("Calling the Backend Api",axiosResult);
+/**
+ *  This Function Calls the Backend Api and sends the filekey and filename
+ * 
+ */
+    const { mutate, isPending } = useMutation({
+        mutationFn:
+            async (data: FileData) => {
+                try {
+
+                    const axiosResult = await axios.post(Routes.createchat, {
+                        filename: data.filename,
+                        filekey: data.filekey
+                    })
+
+                    console.log("Calling the Backend Api", axiosResult);
+
+                }
+                catch (err) {
+                    console.log(err)
+                }
 
             }
-            catch (err) {
-                console.log(err)
-            }
-
-        }
     });
 
     const { getInputProps, getRootProps } = useDropzone({
         accept: { "application/pdf": [".pdf"] },  //* Only Pdf Files Allowed
         maxFiles: 1,                              //* One File
+
+        //* When we drop the file it gets uploaded in S3
         onDrop: async (file) => {
             console.log(file);
             const res = await upload(file[0]);
-            console.log("Data that upload function returned",res);
+            // console.log("Data that upload function returned",res);
 
             if (!res?.filekey || !res?.filename) {
                 console.log("Something went wrong during upload")
                 return;
             }
 
-            mutate(res as FileData,{
-                onSuccess:(data)=>{
-                    toast.success("Successfully uploaded the file",{id:"success-1"})
+
+            mutate(res as FileData, {
+                onSuccess: (data) => {
+                    toast.success("Successfully uploaded the file", { id: "success-1" })
                 },
-                onError:(err)=>{
-                    toast.error("Something went wrong",{id:"Mutate-error-1"})
+                onError: (err) => {
+                    toast.error("Something went wrong", { id: "Mutate-error-1" })
                     console.log(err);
                 }
             })
@@ -93,7 +102,12 @@ const FileUpload =  (props: Props) => {
     )
 }
 
+
 export default FileUpload
+
+
+
+
 {/* <LuLoader2 className='text-blue-700 w-[30px] h-[30px] animate-spin ' />
 <p className='mt-3 text-sm text-slate-400'>Spealing Tea to Gpt </p> */}
 

@@ -12,7 +12,15 @@ export const client = new S3Client({
 })
 
 
-//* Progress feature left
+/**
+ * 
+ * @param File  
+ * This function is used for uploading file to s3 which returns following
+ * @returns File name and File Key
+ */
+
+// * Uploading file to 
+// * Progress feature left
 export const upload = async (file: File) => {
     try {
         const fileKey = "uploads/" + Date.now() + file.name.replaceAll(" ", "");
