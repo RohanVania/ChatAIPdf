@@ -33,7 +33,7 @@ export const upload = async (file: File) => {
             BucketKeyEnabled:true
         })
         const res = await client.send(command);
-        console.log(res);
+        // console.log(res);
         return {
             filekey:fileKey,
             filename:file.name
@@ -57,9 +57,9 @@ export const getObjectUrl = (filekey: string) => {
 
         // const response=await client.send(command);
         const url=`https://${process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${filekey}`;
-        console.log(url)
-        return url;
+        // console.log("Path for S3 Url =>",url)
+        return url as string;
     } catch (err) {
-        console.log(err)
+        console.log("Error in s3 getting url",err)
     }
 }

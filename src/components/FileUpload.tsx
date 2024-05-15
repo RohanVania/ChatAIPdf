@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+// import React, { useEffect } from 'react'
 import { IoMdMailOpen } from "react-icons/io";
 import { useDropzone } from "react-dropzone"
 import { upload, getObjectUrl } from '@/lib/s3';
@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios from "axios"
 import { Routes } from "@/lib/routes/index"
 import toast from 'react-hot-toast';
+import {useRouter} from "next/navigation" 
 import { connectedToIndex, pinecone } from "@/lib/pinecone"
 
 type Props = {
@@ -21,19 +22,20 @@ type FileData = {
 
 const FileUpload = (props: Props) => {
 
-    useEffect(() => {
-        async function Index() {
-            const r = await pinecone.listIndexes();
-            console.log("uashdhasoiud", r);
-        }
-        Index();
-    }, [])
+    const router=useRouter();
+    // useEffect(() => {
+    //     async function Index() {
+    //         const r = await pinecone.listIndexes();
+    //         console.log("uashdhasoiud", r);
+    //     }
+    //     Index();
+    // }, [])
 
 
-/**
- *  This Function Calls the Backend Api and sends the filekey and filename
- * 
- */
+    /**
+     *  This Function Calls the Backend Api and sends the filekey and filename
+     * 
+     */
     const { mutate, isPending } = useMutation({
         mutationFn:
             async (data: FileData) => {
@@ -45,10 +47,11 @@ const FileUpload = (props: Props) => {
                     })
 
                     console.log("Calling the Backend Api", axiosResult);
+                    return axiosResult.data
 
                 }
                 catch (err) {
-                    console.log(err)
+                    console.log("Error in react query mutate function", err)
                 }
 
             }
@@ -72,6 +75,13 @@ const FileUpload = (props: Props) => {
 
             mutate(res as FileData, {
                 onSuccess: (data) => {
+                    console.log("On Success Data =>", data)
+                    const { insertId: chatpdfId } = data.databaseUpload[0];
+
+                    if (chatpdfId === null || chatpdfId === undefined) {
+                        throw new Error("Unable to get the chatpdf Id");
+                    }
+                    router.push(`/chat/${chatpdfId}`);
                     toast.success("Successfully uploaded the file", { id: "success-1" })
                 },
                 onError: (err) => {

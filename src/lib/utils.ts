@@ -10,6 +10,17 @@ export function cn(...inputs: ClassValue[]) {
  * This function we use because Pinecone, only excepts ascii characters and sometimes filkey from s3 is not always contain only ascii characters
  */
 export function convertToAscii(inputString:string){
-  const asciiString=inputString.replace(/[^\x00- \x7F]/g,"");
+  // console.log("Input String",inputString)
+  const asciiString=inputString.replace(/[^\x20-\x7E]/g, "");
   return asciiString;
 }
+
+// export function convertFilePathToAscii(filePath:string) {
+//   const asciiFilePath = convertToAscii(filePath);
+//   console.log("Ascii File Path", asciiFilePath);
+//   return asciiFilePath;
+// }
+
+// // Usage example
+// const filePath = 'uploads/1715781552529MyTinyGuidetoShadcn,Radix,andTailwind_byMairajPirzada_Medium.pdf';
+// convertFilePathToAscii(filePath);

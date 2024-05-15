@@ -1,15 +1,27 @@
 import { NextResponse } from "next/server";
 import {loadS3toPinecone} from "@/lib/pinecone"
+import { db } from "@/lib/db";
+import { chatPdf } from "@/lib/db/schema";
+import {getObjectUrl} from "@/lib/s3"
 
 export async function POST(request:Request,response:Response){
     try{
         const {filename,filekey}=await request.json();
 
         const data=await loadS3toPinecone(filekey);
-        
-        return NextResponse.json({message:"Success",status:200,pages:data})
+        const result=await db.insert(chatPdf).values({
+            fileKey:filekey,
+            pdfName:filename,
+            pdfUrl:getObjectUrl(filekey)as string
+        }).returning({
+            insertId:chatPdf.id
+        })
+       
+        console.log(result);
+        return NextResponse.json({message:"Success",status:200,pages:data,databaseUpload:result})
 
-    }catch(err){
+    }catch(err){ 
+        console.log(err)
         return NextResponse.json({error:"Internal Error",status:500})
     }
 }

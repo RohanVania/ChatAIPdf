@@ -25,7 +25,7 @@ export async function getEmbeddings(text:string){
                 model:"text-embedding-ada-002",
             })
             
-            console.log("Embedding looks =>",embeddingOpenAiModel);
+            // console.log("Embedding looks =>",embeddingOpenAiModel);
             const result=await embeddingOpenAiModel.json();
             // console.log("Result =>",result);
             return result.data[0].embedding;

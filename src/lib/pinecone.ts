@@ -7,14 +7,23 @@ import md5 from "md5"
 import { convertToAscii } from "./utils"
 dotenv.config({ path: "../../.env" })
 
-type PdfPage = {
-    pageContent: string,
-    metadata: {
-        loc: { pageNumber: number },
-
-    }
+type VectorMetadata = {
+    text: string;
+    pageNumber: number;
 }
 
+type Vector = {
+    id: string;
+    values: number[];
+    metadata: VectorMetadata; // Use the defined metadata type
+}
+
+type PdfPage = {
+    pageContent: string;
+    metadata: {
+        loc: { pageNumber: number };
+    }
+}
 
 //* Creating a Pineconde Object
 export const pinecone = new Pinecone(
@@ -25,7 +34,7 @@ export const pinecone = new Pinecone(
 
 // * Creating connection to our pinecone
 export const connectedToIndex = pinecone.Index(process.env.NEXT_PUBLIC_PINECONE_INDEX!);
-console.log("Connecttion to Pine Cone =>",connectedToIndex)
+// console.log("Connecttion to Pine Cone =>", connectedToIndex)
 
 
 /**
@@ -44,28 +53,27 @@ export async function loadS3toPinecone(filekey: string) {
         const langchainLoader = await downloadFromS3(filekey);
         const loadedData = await langchainLoader?.load() as PdfPage[];
 
-
         //*2 Split and segment the pdf
         const documents = await Promise.all(loadedData.map(prepareDocument));
-        console.log("Documents +>", documents);
+        // console.log("Documents +>", documents);
 
         //* 3 Vectorize and embed documents
-       const vector= await Promise.all(documents.flat().map(embedDocument));
-       console.log("Vectors =>",vector);
+        const vector = await Promise.all(documents.flat().map(embedDocument));
+        //    console.log("Vectors =>",vector);
 
-       //* 4 Upload  Vector to Pinecone
-      const asciiFileKey= convertToAscii(filekey);
-      
-       
-
-
+        //* 4 Upload  Vector to Pinecone
+        // console.log("File Key =>", filekey);
+        const asciiFileKey = convertToAscii(filekey);
+        // console.log("Ascii File key", asciiFileKey)
+        const vectorInPinecone = await connectedToIndex.namespace(asciiFileKey).upsert(vector)
+        // console.log(documents[0])
+        return documents[0];
 
     } catch (err) {
         console.log("Err in LoadS3toPineCone =>", err)
     }
 
 }
-
 
 
 /**
@@ -85,10 +93,10 @@ export async function loadS3toPinecone(filekey: string) {
 export const prepareDocument = async (page: PdfPage) => {
     let { pageContent, metadata } = page;
     pageContent = pageContent.replace(/\n/g, "");
-    console.log("Page Content =>", pageContent);
+    // console.log("Page Content =>", pageContent);
 
     const splitter = new RecursiveCharacterTextSplitter();
-    console.log("Splitter => ", splitter);
+    // console.log("Splitter => ", splitter);
 
     const doc = await splitter.splitDocuments([
         new Document({
@@ -112,22 +120,21 @@ export const prepareDocument = async (page: PdfPage) => {
  * @param doc 
  * This Function creates a vector Embedding
  */
-async function embedDocument(doc: Document) {
+async function embedDocument(doc: Document): Promise<Vector> {
     try {
-        const embeddings = await getEmbeddings(doc.pageContent)
+        const embeddings = await getEmbeddings(doc.pageContent);
         const hash = md5(doc.pageContent);
-        const vector = {
+        const vector: Vector = {
             id: hash,
-            values: embeddings,
+            values: embeddings as number[],
             metadata: {
-                text: doc.metadata.text,
-                pageNumber: doc.metadata.pageNumber
+                text: doc.metadata.text as string,
+                pageNumber: doc.metadata.pageNumber as number
             }
-        }
-        console.log(vector)
+        };
+        // console.log("Vector ",vector);
         return vector;
-    }
-    catch (err) {
+    } catch (err) {
         console.log("Error in Vector Embedding", err);
         throw err;
     }
