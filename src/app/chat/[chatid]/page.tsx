@@ -29,23 +29,14 @@ async function Chat({ params }: Props) {
   }
 
   return (
-    <section className=' min-h-screen w-full'>
+    <section className=' min-h-screen w-full bg-yellow-50'>
       
       <div className='w-full h-full flex'>
         {/* Chat Side Bar */}
-        <div>
+        <div className='h-full '>
           <ChatSideBar/>
         </div>
-        {/* Chat Viewer */}
-        <div>
-          {/* <ChatViewer/> */}
-          ChatPdf Display
-        </div>
-        {/* Chat Section */}
-        <div>
-          {/* <ChatComponent/> */}
-          Chat Section
-        </div>
+      
 
       </div>
 
