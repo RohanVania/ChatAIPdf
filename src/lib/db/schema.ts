@@ -9,20 +9,23 @@ export const users = pgTable('users', {
 });
 
 export const chatPdf=pgTable("chatpdf",{
-    id:serial('id').primaryKey().notNull(),
+    // id:serial('id').primaryKey().notNull(),
+    id:text('id').primaryKey().notNull().$defaultFn(()=>crypto.randomUUID()),
     pdfName:text('pdf_name').notNull(),
     pdfUrl:text("pdf_url").notNull(),
     createdAt:timestamp("created_At").notNull().defaultNow(),
     fileKey:text("file_key").notNull(),
-    userId:varchar("user_id",{length:256}).notNull(), //Clerk database for example this will come from
+    // userId:varchar("user_id",{length:256}).notNull(), //Clerk database for example this will come from
+    userId:text("user_id").notNull().$defaultFn(()=>crypto.randomUUID()), //Clerk database for example this will come from
+
 })
 
-export const messages=pgTable("messages",{
-    id:serial('id').primaryKey().notNull(),
-    chatId:integer('chat_id').references(()=>chatPdf.id).notNull(),
-    content:text('content').notNull(),
-    createdAt:timestamp("created_At").notNull().defaultNow(),
-    role:roleEnum('role').notNull() 
-})
+export const messages = pgTable("messages", {
+  id: serial('id').primaryKey().notNull(),
+  chatId: integer('chat_id').references(() => chatPdf.id).notNull(),
+  content: text('content').notNull(),
+  createdAt: timestamp("created_At").notNull().defaultNow(),
+  role: roleEnum('role').notNull()
+});
 
 

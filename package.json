@@ -7,7 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:migrate": "node src/lib/db/migrate.js",
+    "db:generate":"drizzle-kit generate:pg --schema src/lib/db/schema.ts --out ./drizzle"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.572.0",
