@@ -132,7 +132,7 @@ async function embedDocument(doc: Document): Promise<Vector> {
                 pageNumber: doc.metadata.pageNumber as number
             }
         };
-        // console.log("Vector ",vector);
+        console.log("Vector ",vector);
         return vector;
     } catch (err) {
         console.log("Error in Vector Embedding", err);
