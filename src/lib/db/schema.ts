@@ -29,3 +29,7 @@ export const messages = pgTable("messages", {
 });
 
 
+//* For Typescript
+
+export type DrizzleChat=typeof chatPdf.$inferSelect;
+

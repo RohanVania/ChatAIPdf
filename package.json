@@ -9,13 +9,14 @@
     "start": "next start",
     "lint": "next lint",
     "db:migrate": "node src/lib/db/migrate.js",
-    "db:generate":"drizzle-kit generate:pg --schema src/lib/db/schema.ts --out ./drizzle"
+    "db:generate": "drizzle-kit generate:pg --schema src/lib/db/schema.ts --out ./drizzle"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.572.0",
     "@neondatabase/serverless": "^0.9.1",
     "@pinecone-database/doc-splitter": "^0.0.1",
     "@pinecone-database/pinecone": "^2.2.0",
+    "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@smithy/types": "^2.12.0",
     "@tanstack/react-query": "^5.35.1",
@@ -26,6 +27,7 @@
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.20.18",
     "drizzle-orm": "^0.30.10",
+    "framer-motion": "^11.2.3",
     "fs": "^0.0.1-security",
     "langchain": "^0.1.37",
     "lucide-react": "^0.378.0",
