@@ -22,7 +22,7 @@ export const chatPdf=pgTable("chatpdf",{
 
 export const messages = pgTable("messages", {
   id: serial('id').primaryKey().notNull(),
-  chatId: integer('chat_id').references(() => chatPdf.id).notNull(),
+  chatId: integer('chat_id').references(() => chatPdf.id).notNull(), 
   content: text('content').notNull(),
   createdAt: timestamp("created_At").notNull().defaultNow(),
   role: roleEnum('role').notNull()

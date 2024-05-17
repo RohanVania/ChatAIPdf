@@ -17,7 +17,6 @@ export async function POST(request:Request,response:Response){
             insertId:chatPdf.id
         })
        
-        console.log(result);
         return NextResponse.json({message:"Success",status:200,pages:data,databaseUpload:result})
 
     }catch(err){ 

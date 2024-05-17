@@ -96,13 +96,13 @@ const ChatSideBar = ({ allChatPdfForGivenUser, chatId }: Props) => {
                 !isOpen &&
                 <div className='p-2  justify-between items-center bg-green-40 absolute top-[8px] left-[8px] z-[10] '>
                     <div className=" ml-auto rounded-full overflow-hidden">
-                        <FaAngleDoubleRight className={`  bg-[#5900F2] text-4xl p-2 rounded-full  cursor-pointer text-white `} onClick={toggleSidebar} />
+                        <FaAngleDoubleRight className={` text-[#5900F2] bg-white text-4xl p-2 rounded-full  cursor-pointer border-[2px]   `} onClick={toggleSidebar} />
                     </div>
                 </div>
             }
 
             <motion.div
-                className='h-scree h-full  bg-gray-900 max-w-[245px] text-gray-200 relative  overflow-hidden '
+                className='h-scree h-full  bg-gray-900 max-w-[255px] text-gray-200 relative  overflow-hidden '
                 initial={false}
                 animate={isOpen ? "open" : "closed"}
                 variants={sidebarVariants}
@@ -136,12 +136,12 @@ const ChatSideBar = ({ allChatPdfForGivenUser, chatId }: Props) => {
                     
                     <motion.div
                         animate={isOpen ? "opened" : "closed"}
+
                         variants={ListVariants}
                         className="bg-red-80 overflow-y-auto flex flex-col gap-y-3">
                         {
                             allChatPdfForGivenUser?.map((chat) => {
                                 return (
-                                    <>
                                         <Link key={chat.id} href={`/chat/${chat.id}`} >
 
                                             <div className={
@@ -156,7 +156,6 @@ const ChatSideBar = ({ allChatPdfForGivenUser, chatId }: Props) => {
                                         </Link>
                                        
 
-                                    </>
 
                                 )
                             })
