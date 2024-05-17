@@ -24,16 +24,16 @@ const ChatComponent = ({chatid}: Props) => {
     <div className='relative  overflow-y-hidden h-full max-h-full'>
 
       {/* Header */}
-      <div className='sticky top-0 md:text-left text-center inset-x-0 p-2 bg-white h-fit '>
+      <div className='sticky top-0 md:text-left text-center inset-x-0 p-2 bg-white h-fit mb-2'>
         <h3 className='text-xl font-semibold'>PDF CHAT</h3>
       </div>
 
       {/* Message List */}
-      <div className='  h-[95%]   overflow-y-auto pb-[90px]'>
+      <div className='  h-[95%  max-h-full overflow-y-auto pb-[90px] '>
         <MessageList messages={messages}/>
       </div>
 
-      <form className='flex w-full space-x-2 sticky bottom-0 inset-x-0 px-2 py-3 bg-white  z-20' onSubmit={handleSubmit} >
+      <form className='flex w-full space-x-2 sticky bottom-[0px] md:bottom-[-1px] inset-x-0 px-2 py-3  bg-white z-30 ' onSubmit={handleSubmit} >
         <Input type="text" value={input} onChange={handleInputChange} placeholder="Ask anything about the PDF" className='w-full' />
         <Button type="submit" className='flex items-center gap-x-2'>
           <p className=''>Send</p>

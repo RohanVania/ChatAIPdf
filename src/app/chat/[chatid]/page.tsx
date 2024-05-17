@@ -35,22 +35,22 @@ async function Chat({ params }: Props) {
 
   return (
     <section className=' max-h-screen w-full  relative  h-screen overflow-y-auto '>
-      <div className='w-full h-full  flex max-h-screen  '>
+      <div className='w-full h-full  flex max-h-screen  relative'>
 
         {/* Chat Side Bar */}
-        <div className='h-full  max-h-scree '>
+        <div className='h-full  max-h-scree absolute lg:relative z-40'>
           <ChatSideBar allChatPdfForGivenUser={allChatPdfForGivenUser} chatId={chats[0].id} />
         </div>
 
         {/* Chat Pdf Viewer */}
-        <div className='flex w-full justify-evenly flex-wrap  gap-[10px]  overflow-y-hidde h-full'>
+        <div className='flex w-full justify-between flex-wrap  gap-x-[50px]  overflow-y-hidde h-full'>
 
           <div className='  w-full max-w-[810px] max-h-full'>
             <ChatPdfViewer pdf_url={'https://chatpdf-rohan.s3.amazonaws.com/uploads/1715788287423MyTinyGuidetoShadcn,Radix,andTailwind_byMairajPirzada_Medium.pdf'} />
           </div>
 
           {/* Chat Component */}
-          <div className='  max-w-[768px]  w-full whitespace-normal break-words h-ful max-h-[460px] 2xl:max-h-full   '>
+          <div className='  max-w-[768px flex-1 w-full whitespace-normal break-words h-ful max-h-[472.px] lg:max-h-[99.4%]   '>
             <ChatComponent chatid={chats[0].id} />
           </div>
         </div>
