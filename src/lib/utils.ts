@@ -15,12 +15,3 @@ export function convertToAscii(inputString:string){
   return asciiString;
 }
 
-// export function convertFilePathToAscii(filePath:string) {
-//   const asciiFilePath = convertToAscii(filePath);
-//   console.log("Ascii File Path", asciiFilePath);
-//   return asciiFilePath;
-// }
-
-// // Usage example
-// const filePath = 'uploads/1715781552529MyTinyGuidetoShadcn,Radix,andTailwind_byMairajPirzada_Medium.pdf';
-// convertFilePathToAscii(filePath);

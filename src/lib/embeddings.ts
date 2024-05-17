@@ -1,14 +1,12 @@
 
 import {Configuration, OpenAIApi} from "openai-edge"
-import dotenv from "dotenv"
-dotenv.config({path:"../../.env"})
 
 const configuration=new Configuration({
     apiKey:process.env.NEXT_PUBLIC_OPENAI_API_KEY,
 })
 
 
-const openai=new OpenAIApi(configuration);
+export const openai=new OpenAIApi(configuration);
 
 
 /**
@@ -21,8 +19,8 @@ const openai=new OpenAIApi(configuration);
 export async function getEmbeddings(text:string){
     try{
            const embeddingOpenAiModel=await openai.createEmbedding({
+               model:"text-embedding-ada-002",
                 input:text.replace(/\n/g," "),
-                model:"text-embedding-ada-002",
             })
             
             // console.log("Embedding looks =>",embeddingOpenAiModel);

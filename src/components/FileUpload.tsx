@@ -1,15 +1,13 @@
 'use client'
-// import React, { useEffect } from 'react'
 import { IoMdMailOpen } from "react-icons/io";
 import { useDropzone } from "react-dropzone"
-import { upload, getObjectUrl } from '@/lib/s3';
+import { upload } from '@/lib/s3';
 import { LuLoader2 } from "react-icons/lu";
 import { useMutation } from '@tanstack/react-query';
 import axios from "axios"
 import { Routes } from "@/lib/routes/index"
 import toast from 'react-hot-toast';
 import {useRouter} from "next/navigation" 
-import { connectedToIndex, pinecone } from "@/lib/pinecone"
 
 type Props = {
 
@@ -117,8 +115,3 @@ export default FileUpload
 
 
 
-
-{/* <LuLoader2 className='text-blue-700 w-[30px] h-[30px] animate-spin ' />
-<p className='mt-3 text-sm text-slate-400'>Spealing Tea to Gpt </p> */}
-
-{/* <button className='bg-red-200 mt-3' onClick={ ()=>{ getObjectUrl("uploads/1715271645586MyTinyGuidetoShadcn,Radix,andTailwind_byMairajPirzada_Medium.pdf")}}>Click to Get Url </button> */ }
