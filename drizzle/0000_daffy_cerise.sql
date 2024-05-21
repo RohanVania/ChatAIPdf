@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS "chatpdf" (
 	"pdf_url" text NOT NULL,
 	"created_At" timestamp DEFAULT now() NOT NULL,
 	"file_key" text NOT NULL,
-	"user_id" varchar(256) NOT NULL
+	"user_id" text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "messages" (

@@ -9,7 +9,9 @@ export async function POST(request:Request,response:Response){
         const {filename,filekey}=await request.json();
 
         const data=await loadS3toPinecone(filekey);
+
         const result=await db.insert(chatPdf).values({
+            userId:"1234",
             fileKey:filekey,
             pdfName:filename,
             pdfUrl:getObjectUrl(filekey)as string

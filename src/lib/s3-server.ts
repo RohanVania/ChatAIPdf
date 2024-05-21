@@ -20,18 +20,17 @@ export async function downloadFromS3(filekey: string) {
             Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME as string,
             Key: filekey
         })
-
-        const file_name = `C:/Users/Rohan/Desktop/ChatwithPdf2/temp/upload${Date.now()}.pdf`
+        const file_name = `C:/Users/Rohan/Desktop/CHATPDF/temp/upload${Date.now()}.pdf`
 
         const file = await client.send(command)
-        
         //* Transforming File Body to Byte Array which can be stored in Buffer
         const array = await file.Body?.transformToByteArray();
         //* Storing file in temp folder
         fs.writeFileSync(file_name, Buffer.from(array as Uint8Array))
-        
         //* Extracting text from the loaded file
         const loader=new PDFLoader(file_name as string)
+
+
         return loader;
 
     } catch (err) {

@@ -1,18 +1,28 @@
 import { db } from '@/lib/db';
-import { chatPdf } from '@/lib/db/schema';
+import { chatPdf, users } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import ChatSideBar from "@/components/ChatSideBar"
 import ChatPdfViewer from '@/components/ChatPdfViewer';
 import ChatComponent from '@/components/ChatComponent';
+import {sql} from "drizzle-orm"
+
 
 type Props = {
   params: {
-    chatid: any
+    id: any
   }
 }
 
 async function Chat({ params }: Props) {
+
+  console.log("Params =>", params);
+
+  if (params?.id?.length > 1) {
+    return redirect("/error")
+  }
+
+
 
   //* This will be the authentication Id using some authentication eg clerk,
   const userId = true;
@@ -21,13 +31,18 @@ async function Chat({ params }: Props) {
   }
 
 
-  const chats = await db.select().from(chatPdf).where(eq(chatPdf.userId, "3781c069-fe4e-4312-a21c-93bba06e66fa"));
-  // console.log("Pdf Id For a Particualar Document",chats)
+  
+
+  let allPdfOfUser = await db.query.chatPdf.findMany();
+  console.log("Pdf s =>",allPdfOfUser);
+
+  let activePdf=allPdfOfUser.find((chat)=>chat.id === parseInt(params.id[0]));
+  console.log("Active Pdf =>",activePdf);
 
   /** Chats is an array, if we cant find anything return to home */
-  if (chats.length <= 0) {
-    return redirect("/")
-  }
+  // if (chats.length <= 0) {
+  //   return redirect("/")
+  // }
 
 
   //TODO Later Change ChatPdf for particular User
@@ -39,22 +54,28 @@ async function Chat({ params }: Props) {
 
         {/* Chat Side Bar */}
         <div className='h-full  max-h-scree absolute lg:relative z-40'>
-          <ChatSideBar allChatPdfForGivenUser={allChatPdfForGivenUser} chatId={chats[0].id} />
+          <ChatSideBar
+          allChatPdfForGivenUser={allPdfOfUser} 
+          activePdfId={activePdf?.id}
+          />
         </div>
 
         {/* Chat Pdf Viewer */}
         <div className='flex w-full justify-between flex-wrap  gap-x-[50px]  overflow-y-hidde h-full'>
 
-          <div className='  w-full max-w-[810px] max-h-full'>
-            <ChatPdfViewer pdf_url={'https://chatpdf-rohan.s3.amazonaws.com/uploads/1715788287423MyTinyGuidetoShadcn,Radix,andTailwind_byMairajPirzada_Medium.pdf'} />
+          <div className='  w-full max-w-[810px] max-h-full bg-red-400'>
+            <ChatPdfViewer pdf_url={activePdf?.pdfUrl } />
           </div>
 
           {/* Chat Component */}
           <div className='  max-w-[768px flex-1 w-full whitespace-normal break-words h-ful max-h-[472.px] lg:max-h-[99.4%]   '>
-            <ChatComponent chatid={chats[0].id} />
+            <ChatComponent
+              activeId={activePdf?.id}
+            // chatid={chats[0].id} 
+            />
           </div>
         </div>
-      
+
       </div>
 
     </section>

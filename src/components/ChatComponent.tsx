@@ -5,17 +5,18 @@ import { Button } from './ui/button'
 import {useChat} from "ai/react"
 import MessageList from './MessageList'
 import { RiSendPlaneFill } from "react-icons/ri";
+import { cn } from '@/lib/utils'
 
 
 type Props = {
-  chatid:string
+  activeId?:number
 }
 
-const ChatComponent = ({chatid}: Props) => {
+const ChatComponent = ({activeId}: Props) => {
     const {input,handleInputChange,handleSubmit,messages}=useChat({
     api:'/api/chat',
     body:{
-      chatid:chatid
+      chatid:activeId
     }
   });
 
@@ -29,7 +30,11 @@ const ChatComponent = ({chatid}: Props) => {
       </div>
 
       {/* Message List */}
-      <div className='  h-[95%  max-h-full overflow-y-auto pb-[90px] '>
+      <div
+        className={cn("max-h-full overflow-y-auto ",{
+          "pb-[90px]":messages.length >0
+        })}
+      >
         <MessageList messages={messages}/>
       </div>
 

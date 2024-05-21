@@ -21,13 +21,6 @@ type FileData = {
 const FileUpload = (props: Props) => {
 
     const router=useRouter();
-    // useEffect(() => {
-    //     async function Index() {
-    //         const r = await pinecone.listIndexes();
-    //         console.log("uashdhasoiud", r);
-    //     }
-    //     Index();
-    // }, [])
 
 
     /**

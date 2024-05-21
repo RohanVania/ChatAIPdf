@@ -12,11 +12,11 @@ import Link from "next/link"
 import { cn } from "@/lib/utils";
 
 type Props = {
-    allChatPdfForGivenUser: DrizzleChat[],
-    chatId?: string
+    allChatPdfForGivenUser?: DrizzleChat[],
+    activePdfId?: number
 }
 
-const ChatSideBar = ({ allChatPdfForGivenUser, chatId }: Props) => {
+const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
     const [isOpen, setIsOpen] = useState(true);
 
     const sidebarVariants = {
@@ -116,16 +116,18 @@ const ChatSideBar = ({ allChatPdfForGivenUser, chatId }: Props) => {
 
                 <div className='w-full h-ful px-4  mt-6 mb-5'>
 
-                    <motion.div
-                        initial={false}
-                        animate={isOpen ? "opened" : "closed"}
-                        variants={buttonVariants}
+                    <div
+                        // initial={false}
+                        // animate={isOpen ? "opened" : "closed"}
+                        // variants={buttonVariants}
                         className='w-full mt-4'>
-                        <Button className='flex gap-3 border border-white border-dashed mx-auto' onClick={() => setIsOpen(!isOpen)}>
-                            Create a new chat
-                            <GoPlusCircle className='text-xl' />
-                        </Button>
-                    </motion.div>
+                        <Link href={"/"}>
+                            <Button className='flex gap-3 border border-white border-dashed mx-auto' onClick={() => setIsOpen(!isOpen)}>
+                                Create a new chat
+                                <GoPlusCircle className='text-xl' />
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
 
                 <motion.div
@@ -133,7 +135,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, chatId }: Props) => {
                     animate={isOpen ? "opened" : "closed"}
                     variants={ListBox}
                     className="container flex flex-col gap-y-2 pl-2 pr-0 mt-5  h-[75.3%]">
-                    
+
                     <motion.div
                         animate={isOpen ? "opened" : "closed"}
 
@@ -142,19 +144,19 @@ const ChatSideBar = ({ allChatPdfForGivenUser, chatId }: Props) => {
                         {
                             allChatPdfForGivenUser?.map((chat) => {
                                 return (
-                                        <Link key={chat.id} href={`/chat/${chat.id}`} >
+                                    <Link key={chat.id} href={`/chat/${chat.id}`} >
 
-                                            <div className={
-                                                cn('rounded-lg p-3 text-slate-300 flex items-center', {
-                                                    'bg-[#5900F2] text-white': chat.id === chatId,
-                                                    'hover:text-white': chat.id !== chatId
-                                                })
-                                            }>
-                                                <TbMessageCircle className="mr-2" />
-                                                <p className="bg-red-20 w-full text-sm truncate  ">{chat.pdfName}</p>
-                                            </div>
-                                        </Link>
-                                       
+                                        <div className={
+                                            cn('rounded-lg p-3 text-slate-300 flex items-center', {
+                                                'bg-[#5900F2] text-white': chat.id === activePdfId,
+                                                'hover:text-white': chat.id !== activePdfId
+                                            })
+                                        }>
+                                            <TbMessageCircle className="mr-2" />
+                                            <p className="bg-red-20 w-full text-sm truncate  ">{chat.pdfName}</p>
+                                        </div>
+                                    </Link>
+
 
 
                                 )

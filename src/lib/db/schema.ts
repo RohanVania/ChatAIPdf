@@ -9,8 +9,8 @@ export const users = pgTable('users', {
 });
 
 export const chatPdf=pgTable("chatpdf",{
-    // id:serial('id').primaryKey().notNull(),
-    id:text('id').primaryKey().notNull().$defaultFn(()=>crypto.randomUUID()),
+    id:serial('id').primaryKey().notNull(),
+    // id:text('id').primaryKey().notNull().$defaultFn(()=>crypto.randomUUID()),
     pdfName:text('pdf_name').notNull(),
     pdfUrl:text("pdf_url").notNull(),
     createdAt:timestamp("created_At").notNull().defaultNow(),
