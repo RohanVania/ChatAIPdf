@@ -73,7 +73,9 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       screens:{
-        'smallnavigation':{'max':'400px'}
+        'smallnavigation':{'max':'400px'},
+        'wrapper-div':{'max':'1010px'},
+        'chatbar-wrap':{'max':'998px'}
       }
     },
   },

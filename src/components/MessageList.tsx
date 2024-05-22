@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from '@/lib/utils'
 import { Message } from 'ai/react'
 import React from 'react'
@@ -9,6 +11,8 @@ type Props = {
 const MessageList = ({ messages }: Props) => {
 
     if (!messages) return <></>
+
+    
 
     return (
         <div className='flex flex-col gap-4 px-4  pt-3 pb-5 overflow-y-auto py-10'>

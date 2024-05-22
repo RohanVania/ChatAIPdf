@@ -1,5 +1,6 @@
 import { NextAuthOptions } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
+import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
 
 interface CustomUser {
@@ -12,23 +13,24 @@ interface CustomUser {
 
 export const authOptions: NextAuthOptions = {
     providers: [
-        CredentialsProvider({
-            name: 'Credentials',
-            credentials: {
-                username: { label: "Username", type: "text", placeholder: "johndoe" },
-                password: { label: "Password", type: "password" }
-            },
-            async authorize(credentials, req) {
-                const user = { id: "42", name: "Dave", password: "1234", buddy: "ssup" };
-                if (credentials?.username === user.name && credentials?.password === user.password) {
-                    console.log(user)
-                    return user;
-                } else {
-                    return null;
-                }
-            }
-        }),
-
+        // CredentialsProvider({
+        //     name: 'Credentials',
+        //     credentials: {
+        //         username: { label: "Username", type: "text", placeholder: "johndoe" },
+        //         password: { label: "Password", type: "password" }
+        //     },
+        //     async authorize(credentials, req) {
+        //         const user = { id: "42", name: "Dave", password: "1234", buddy: "ssup" };
+        //         if (credentials?.username === user.name && credentials?.password === user.password) {
+        //             console.log(user)
+        //             return user;
+        //         } else {
+        //             return null;
+        //         }
+        //     }
+        // })
+        
+        // GoogleProvider({}),
         GithubProvider({
             clientId: process.env.GITHUB_APP_CLIENT_ID as string,
             clientSecret: process.env.GITHUB_APP_SECRET as string,
@@ -37,6 +39,9 @@ export const authOptions: NextAuthOptions = {
    
     callbacks:{
         async jwt({ token, user }) {
+
+            console.log("Token",token);
+            console.log("User ",user);
             if (user) {
               return { ...token, ...user };
             }
@@ -46,8 +51,8 @@ export const authOptions: NextAuthOptions = {
             session.user = token.user as any;// you can also declare type
             return session;
           },
-    }
-   
+    },
+    
 }
 
 export default authOptions;

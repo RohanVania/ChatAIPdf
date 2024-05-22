@@ -15,7 +15,7 @@ export default function Home() {
           </div>
           <div className="flex flex-wrap gap-3 justify-center mt-6 mb-2">
             <Button onClick={()=>router.push("/chat")}>Go to Chats</Button>
-            <Button>Manage Subscription</Button>
+            <Button onClick={()=>router.push("/extra")} >Manage Subscription</Button>
           </div>
           <p className="max-w-xl text-center mt-4 text-sm sm:text-lg text-slate-600">
             Join millions of students, researchers and professionals to instantly answer questions and understand research with AI

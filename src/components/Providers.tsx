@@ -6,7 +6,8 @@ type Props = {
     children: React.ReactNode;
 }
 
-const queryclient = new QueryClient();
+const queryclient = new QueryClient({
+});
 
 const Providers = ({ children }: Props) => {
     return (

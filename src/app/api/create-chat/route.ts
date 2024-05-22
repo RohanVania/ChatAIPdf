@@ -18,7 +18,9 @@ export async function POST(request:Request,response:Response){
         }).returning({
             insertId:chatPdf.id
         })
-       
+
+        
+
         return NextResponse.json({message:"Success",status:200,pages:data,databaseUpload:result})
 
     }catch(err){ 
@@ -26,3 +28,7 @@ export async function POST(request:Request,response:Response){
         return NextResponse.json({error:"Internal Error",status:500})
     }
 }
+
+
+
+

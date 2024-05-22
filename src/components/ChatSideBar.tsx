@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { delay, motion, stagger } from "framer-motion"
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
@@ -7,9 +7,10 @@ import { GoPlusCircle } from "react-icons/go";
 import { TbMessageCircle } from "react-icons/tb";
 import { Button } from './ui/button';
 import React from "react";
-import { DrizzleChat } from "@/lib/db/schema"
+import { DrizzleChat, chatPdf } from "@/lib/db/schema"
 import Link from "next/link"
 import { cn } from "@/lib/utils";
+import { db } from "@/lib/db";
 
 type Props = {
     allChatPdfForGivenUser?: DrizzleChat[],
@@ -17,6 +18,8 @@ type Props = {
 }
 
 const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
+
+
     const [isOpen, setIsOpen] = useState(true);
 
     const sidebarVariants = {
@@ -120,13 +123,13 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
                         // initial={false}
                         // animate={isOpen ? "opened" : "closed"}
                         // variants={buttonVariants}
-                        className='w-full mt-4'>
-                        <Link href={"/"}>
-                            <Button className='flex gap-3 border border-white border-dashed mx-auto' onClick={() => setIsOpen(!isOpen)}>
+                        className='w-full mt-4  text-center'>
+                        <Button className='border border-white border-dashed  ' onClick={() => setIsOpen(!isOpen)}>
+                            <Link href={"/"} className="flex gap-3  ">
                                 Create a new chat
                                 <GoPlusCircle className='text-xl' />
-                            </Button>
-                        </Link>
+                            </Link>
+                        </Button>
                     </div>
                 </div>
 
@@ -147,7 +150,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
                                     <Link key={chat.id} href={`/chat/${chat.id}`} >
 
                                         <div className={
-                                            cn('rounded-lg p-3 text-slate-300 flex items-center', {
+                                            cn('rounded-lg rounded-br-none rounded-tr-none p-3 text-slate-300 flex items-center', {
                                                 'bg-[#5900F2] text-white': chat.id === activePdfId,
                                                 'hover:text-white': chat.id !== activePdfId
                                             })
