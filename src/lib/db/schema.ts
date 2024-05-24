@@ -1,12 +1,13 @@
-import { integer, pgTable, serial, text, timestamp, varchar,pgEnum } from "drizzle-orm/pg-core";
-
+import { integer, pgTable, serial, text, timestamp, varchar,pgEnum, primaryKey } from "drizzle-orm/pg-core";
+import type { AdapterAccount } from "next-auth/adapters"
+ 
 export const roleEnum=pgEnum('role',['systemdefined','userdefined'])
 
-export const users = pgTable('users', {
-  id: serial('id').primaryKey(),
-  fullName: text('full_name'),
-  phone: varchar('phone', { length: 256 }),
-});
+// export const users = pgTable('users', {
+//   id: serial('id').primaryKey(),
+//   fullName: text('full_name'),
+//   phone: varchar('phone', { length: 256 }),
+// });
 
 export const chatPdf=pgTable("chatpdf",{
     id:serial('id').primaryKey().notNull(),
@@ -19,6 +20,8 @@ export const chatPdf=pgTable("chatpdf",{
     userId:text("user_id").notNull().$defaultFn(()=>crypto.randomUUID()), //Clerk database for example this will come from
 
 })
+
+
 
 export const messages = pgTable("messages", {
   id: serial('id').primaryKey().notNull(),
@@ -33,3 +36,16 @@ export const messages = pgTable("messages", {
 
 export type DrizzleChat=typeof chatPdf.$inferSelect;
 
+// export type DrizzleUser=typeof users.$inferInsert
+
+export const users= pgTable("user", {
+  id: text("id")
+    .primaryKey().notNull(),
+  name: text("name"),
+  email: text("email").notNull(),
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
+  image: text("image"),
+})
+
+ 
+ 
