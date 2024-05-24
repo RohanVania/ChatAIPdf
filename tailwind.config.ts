@@ -75,7 +75,8 @@ const config = {
       screens:{
         'smallnavigation':{'max':'400px'},
         'wrapper-div':{'max':'1010px'},
-        'chatbar-wrap':{'max':'998px'}
+        'chatbar-wrap':{'max':'998px'},
+        
       }
     },
   },

@@ -1,6 +1,6 @@
 "use client"
-import { useEffect, useState } from "react";
-import { delay, motion, stagger } from "framer-motion"
+import { useState } from "react";
+import { motion } from "framer-motion"
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { GoPlusCircle } from "react-icons/go";
@@ -10,7 +10,9 @@ import React from "react";
 import { DrizzleChat, chatPdf } from "@/lib/db/schema"
 import Link from "next/link"
 import { cn } from "@/lib/utils";
-import { db } from "@/lib/db";
+import logo from "../../public/download.png"
+import Image from "next/image"
+import { useRouter } from "next/navigation";
 
 type Props = {
     allChatPdfForGivenUser?: DrizzleChat[],
@@ -18,6 +20,7 @@ type Props = {
 }
 
 const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
+    const router=useRouter();
 
 
     const [isOpen, setIsOpen] = useState(true);
@@ -99,6 +102,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
                 !isOpen &&
                 <div className='p-2  justify-between items-center bg-green-40 absolute top-[8px] left-[8px] z-[10] '>
                     <div className=" ml-auto rounded-full overflow-hidden">
+                        
                         <FaAngleDoubleRight className={` text-[#5900F2] bg-white text-4xl p-2 rounded-full  cursor-pointer border-[2px]   `} onClick={toggleSidebar} />
                     </div>
                 </div>
@@ -111,8 +115,11 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
                 variants={sidebarVariants}
             >
 
-                <div className='p-4 flex justify-between items-center bg-green-40'>
-                    <div className=" ml-auto ">
+                <div className='p-4 flex justify-between items-center '>
+                    <div className="w-[40px] aspect-square  rounded-lg overflow-hidden cursor-pointer" onClick={()=>{router.push("/")}}>
+                        <Image src={logo} alt="logo-pdf" className="rounded-lg w-full h-full " />
+                    </div>
+                    <div className=" ml-aut ">
                         <FaAngleDoubleLeft className={` text-[#5900f2]  text-4xl p-2 rounded-full bg-white cursor-pointer `} onClick={toggleSidebar} />
                     </div>
                 </div>

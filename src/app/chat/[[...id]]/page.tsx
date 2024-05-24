@@ -69,7 +69,7 @@ async function Chat({ params }: Props) {
           <div className='  w-full max-w-[810px] max-h-full '>
             { 
               !id ? 
-              <FileUpload classname='h-[100%]' userId={userId}/>
+              <FileUpload classname='h-[100%]' />
               : <ChatPdfViewer pdf_url={activePdf?.pdfUrl} /> 
             }
           </div>
