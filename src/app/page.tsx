@@ -25,7 +25,7 @@ export default function Home() {
               <Image src="https://avatars.githubusercontent.com/u/139475519" className="object-cover bg-top" alt="Person-Image" width={52} height={52}/>
             </div>
           </div>
-          <p className="max-w-xl text-center mt-4 text-sm sm:text-lg text-slate-600">
+          <p className="max-w-xl text-center mt-4 text-sm sm:text-lg text-slate-600 mb-6">
             Join millions of students, researchers and professionals to instantly answer questions and understand research with AI
           </p>
           <FileUpload/>

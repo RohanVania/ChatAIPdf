@@ -66,7 +66,7 @@ async function Chat({ params }: Props) {
         {/* Chat Pdf Viewer */}
         <div className='flex w-full justify-between chatbar-wrap:justify-center flex-wrap  gap-x-[50px]  overflow-y-hidde h-full'>
 
-          <div className='  w-full max-w-[810px] max-h-full '>
+          <div className='  w-full max-w-[810px] max-h-full bg-red-40'>
             { 
               !id ? 
               <FileUpload classname='h-[100%]' />
@@ -90,14 +90,3 @@ async function Chat({ params }: Props) {
 }
 
 export default Chat
-// <div>
-//     {params.chatid}
-//   <div>
-//     SideBar
-//   </div>
-//   <div>
-//     ChatPdf Display
-//   </div>
-//   <div>
-//     Chat Section
-//   </div>
