@@ -2,6 +2,7 @@
 import { GetObjectCommand } from "@aws-sdk/client-s3"
 import { client } from "@/lib/s3"
 import fs from "fs"
+import path from 'path'
 import { PDFLoader } from "langchain/document_loaders/fs/pdf"
 
 
@@ -20,7 +21,9 @@ export async function downloadFromS3(filekey: string) {
             Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME as string,
             Key: filekey
         })
-        const file_name = `C:/Users/Rohan/Desktop/CHATPDF/temp/upload${Date.now()}.pdf`
+        const rootPath=path.resolve("./");
+        console.log(__dirname);
+        const file_name = rootPath+`/temp/upload${Date.now()}.pdf`
 
         const file = await client.send(command)
         //* Transforming File Body to Byte Array which can be stored in Buffer
