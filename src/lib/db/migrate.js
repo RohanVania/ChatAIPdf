@@ -5,7 +5,7 @@ import { config } from "dotenv";
 
 config({ path: ".env" });
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = neon('postgresql://pdfchatdatabase_owner:M7YIjsiU8LnD@ep-misty-recipe-a4826yq8.us-east-1.aws.neon.tech/pdfchatdatabase?sslmode=require');
 const db = drizzle(sql);
 const main = async () => {
   try {

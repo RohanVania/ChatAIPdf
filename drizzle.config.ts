@@ -12,6 +12,7 @@ dotenv.config();
 // } satisfies Config;
 
 import { defineConfig } from 'drizzle-kit'
+console.log(process.env.NEXT_PUBLIC_DATABASE_URL)
 
 export default defineConfig({
   schema: "./src/lib/db/schema.ts",

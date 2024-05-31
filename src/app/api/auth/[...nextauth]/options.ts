@@ -1,12 +1,12 @@
 import { NextAuthOptions } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
-import CredentialsProvider from "next-auth/providers/credentials";
+// import CredentialsProvider from "next-auth/providers/credentials";
 import { Provider } from "next-auth/providers/index";
-import { OAuthConfig } from "next-auth/providers/index";
-import {DrizzleAdapter} from "@auth/drizzle-adapter"
-import type { Adapter } from "next-auth/adapters";
-import { db } from "@/lib/db";
+// import { OAuthConfig } from "next-auth/providers/index";
+// import {DrizzleAdapter} from "@auth/drizzle-adapter"
+// import type { Adapter } from "next-auth/adapters";
+// import { db } from "@/lib/db";
 
 interface CustomUser {
   id: string;
@@ -80,7 +80,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/signIn"
   },
-  adapter:DrizzleAdapter(db) 
+  // adapter:DrizzleAdapter(db) 
 }
 
 export const providerMap = authOptions.providers.map((provider: Provider) => {

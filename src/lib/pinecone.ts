@@ -66,6 +66,7 @@ export async function loadS3toPinecone(filekey: string) {
         const asciiFileKey = convertToAscii(filekey);
         // console.log("Ascii File key", asciiFileKey)
         const vectorInPinecone = await connectedToIndex.namespace(asciiFileKey).upsert(vector)
+        console.log("Vector In Pinecone =>",vectorInPinecone)
         // console.log(documents[0])
         return documents[0];
 

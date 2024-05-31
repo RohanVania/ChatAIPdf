@@ -11,7 +11,7 @@ export async function POST(request:Request,response:Response){
         const data=await loadS3toPinecone(filekey);
 
         const result=await db.insert(chatPdf).values({
-            userId:"1234",
+            // userId:"1234",
             fileKey:filekey,
             pdfName:filename,
             pdfUrl:getObjectUrl(filekey)as string
@@ -25,7 +25,7 @@ export async function POST(request:Request,response:Response){
 
     }catch(err){ 
         console.log(err)
-        return NextResponse.json({error:"Internal Error",status:500})
+        return NextResponse.json({error:"Internal Error",status:500,err:err})
     }
 }
 

@@ -17,13 +17,14 @@ export const runtime='edge'
 export async function POST(req:Request,res:NextResponse){
     try{
         const {messages,chatid}=await req.json();
+
         console.log("Message =>",messages)
         console.log("Chat ID =>",chatid);
 
         const latestText=messages[messages.length-1];
         const getContextData=await getContext(latestText,chatid);
 
-        console.log(getContextData)
+        // console.log("Get Context",getContextData);
 
         const prompt={
             role:"system",
@@ -48,7 +49,8 @@ export async function POST(req:Request,res:NextResponse){
             messages:[
                 prompt,...messages.filter((message:Message)=>{return message.role==="user"})
             ],
-            stream:true
+            stream:true,
+            
         })
 
         const stream=OpenAIStream(response);

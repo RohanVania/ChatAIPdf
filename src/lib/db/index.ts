@@ -8,7 +8,7 @@ import { drizzle } from "drizzle-orm/neon-http";
 if(!process.env.NEXT_PUBLIC_DATABASE_URL){
     throw new Error("Database url not found");
 }
-
+console.log()
 export const neonconnection=neon(process.env.NEXT_PUBLIC_DATABASE_URL);
 export const db=drizzle(neonconnection,{schema});
 

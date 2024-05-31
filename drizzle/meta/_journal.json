@@ -5,43 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1716330922799,
-      "tag": "0000_daffy_cerise",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1716578692153,
-      "tag": "0001_silly_redwing",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1716578771835,
-      "tag": "0002_brown_guardian",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1716579480512,
-      "tag": "0003_flat_joseph",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1716580318971,
-      "tag": "0004_handy_james_howlett",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1716584916717,
-      "tag": "0005_zippy_blacklash",
+      "when": 1717099841787,
+      "tag": "0000_tense_rawhide_kid",
       "breakpoints": true
     }
   ]

@@ -21,10 +21,12 @@ CREATE TABLE IF NOT EXISTS "messages" (
 	"role" "role" NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "users" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"full_name" text,
-	"phone" varchar(256)
+CREATE TABLE IF NOT EXISTS "user" (
+	"id" text PRIMARY KEY NOT NULL,
+	"name" text,
+	"email" text NOT NULL,
+	"emailVerified" timestamp,
+	"image" text
 );
 --> statement-breakpoint
 DO $$ BEGIN
