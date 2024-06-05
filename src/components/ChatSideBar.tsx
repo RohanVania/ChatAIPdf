@@ -100,7 +100,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
         <>
             {
                 !isOpen &&
-                <div className='p-2  justify-between items-center bg-green-40 absolute top-[8px] left-[8px] z-[10] '>
+                <div className='p-2  justify-between items-center  absolute top-[8px] left-[8px] z-[10] '>
                     <div className=" ml-auto rounded-full overflow-hidden">
                         
                         <FaAngleDoubleRight className={` text-[#5900F2] bg-white text-4xl p-2 rounded-full  cursor-pointer border-[2px]   `} onClick={toggleSidebar} />

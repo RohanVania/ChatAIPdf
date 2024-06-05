@@ -1,15 +1,16 @@
 "use client"
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { providerMap } from "@/app/api/auth/[...nextauth]/options"
-import {} from "next-auth/react"
 import { useSearchParams } from 'next/navigation'
+import Image from "next/image"
 
 
 type Props = {}
 
 const page = (props: Props) => {
-    
+    // console.log(useSession())
     const searchParams = useSearchParams();
+    console.log("SEARCH PARAMS",searchParams)
 
     return (
         <div className="py-4 px-4  absolute w-full top-[50%] translate-y-[-50%]">
@@ -20,19 +21,23 @@ const page = (props: Props) => {
                     <p className="text-xl text-gray-600 text-center">Welcome back!</p>
                     {
                         providerMap.map((provider) => {
-                            return <button key={provider?.id} onClick={() => signIn(provider?.id,{redirect:false,
-                            // callbackUrl:searchParams.get('callbackUrl') || "/"
-                            callbackUrl:searchParams.get("callbackUrl")!
-                        }
-                            )} className="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100 w-full">
-                                <div className="px-4 py-3">
-                                    <img src={`https://authjs.dev/img/providers/${provider?.style?.logo}`}/>
+                            console.log("Provider =>",provider)
+                            return <button key={provider?.id} onClick={() => signIn(provider?.id, {
+                                // callbackUrl:'http://localhost:3000'
+                                // callbackUrl: "/"
+                                callbackUrl: searchParams.get("callbackUrl")!
+                            }
+                            )} className="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100 w-full ">
+                                <div className="flex items-center">
+                                    <div className="px-2 py-  ">
+                                        <Image alt="logo" src={`https://authjs.dev/img/providers${provider?.style?.logo}`} width={1000} height={1000} className="w-[27px] aspect-square" />
+                                    </div>
+                                    <h1 className="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Sign in with {provider?.name}</h1>
                                 </div>
-                                <h1 className="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Sign in with {provider?.name}</h1>
                             </button>
                         })
                     }
-                   
+
                     <div className="mt-4 flex items-center justify-between">
                         <span className="border-b w-1/5 lg:w-1/4"></span>
                         <a href="#" className="text-xs text-center text-gray-500 uppercase">or login with email</a>

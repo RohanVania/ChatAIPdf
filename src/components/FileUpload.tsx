@@ -93,16 +93,16 @@ const FileUpload = (props: Props) => {
 
 
     return (
-        <div className={`p-2 bg-white rounded-xl mt-0  flex justify-center  h-[97%] items-baseline  `}>
+        <div className={`p-2  bg-white rounded-xl mt-0  flex justify-center  h-[97%] items-baseline  `}>
             {!isPending ?
-                <div {...getRootProps()} className={`border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 w-full py-8 flex flex-col justify-center items-center min-h-[140px]  ${props?.classname}`}>
+                <div {...getRootProps()} className={`border-dashed animate-spi border-2 rounded-xl cursor-pointer bg-gray-50 w-full py-8 flex flex-col justify-center items-center min-h-[140px]  ${props?.classname}`}>
                     <input {...getInputProps()} />
                     <IoMdMailOpen className='text-blue-700 w-[40px] h-[40px]' />
                     <p className='mt-2 text-sm text-slate-400'>Drop Pdf here</p>
                 </div>
                 :
                 <div 
-                className={`border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 w-full py-8 flex flex-col justify-center items-center min-h-[140px]  ${props?.classname}`}
+                className={`border-dashed border-2 rounded-xl cursor-pointer  bg-gray-50 w-full py-8 flex flex-col justify-center items-center min-h-[140px]  ${props?.classname}`}
                 >
                     <LuLoader2 className='text-blue-700 w-[30px] h-[30px] animate-spin ' />
                     <p className='mt-3 text-sm text-slate-400'>Spealing Tea to Gpt </p>

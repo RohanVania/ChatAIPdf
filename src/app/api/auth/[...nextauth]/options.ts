@@ -1,8 +1,8 @@
 import { NextAuthOptions } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
-// import CredentialsProvider from "next-auth/providers/credentials";
 import { Provider } from "next-auth/providers/index";
+// import CredentialsProvider from "next-auth/providers/credentials";
 // import { OAuthConfig } from "next-auth/providers/index";
 // import {DrizzleAdapter} from "@auth/drizzle-adapter"
 // import type { Adapter } from "next-auth/adapters";
@@ -82,6 +82,9 @@ export const authOptions: NextAuthOptions = {
   },
   // adapter:DrizzleAdapter(db) 
 }
+
+
+
 
 export const providerMap = authOptions.providers.map((provider: Provider) => {
   if ('style' in provider) {
