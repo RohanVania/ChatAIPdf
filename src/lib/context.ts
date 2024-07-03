@@ -25,7 +25,7 @@ export const getRelatedVector = async (chatid: string, vectorEmbedding: number[]
         //* Lets get the file key as we storing the file key as the namespace in Pinecone
         const filekeyResult = await db.select({
             file_key: chatPdf.fileKey,
-        }).from(chatPdf).where(eq(chatPdf.id, chatid));
+        }).from(chatPdf).where(eq(chatPdf.id, parseInt(chatid)));
 
         if(filekeyResult.length!=1){
             throw new Error('Pdf not found tp chat')

@@ -7,7 +7,7 @@ import Image from "next/image"
 
 type Props = {}
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
     // console.log(useSession())
     const searchParams = useSearchParams();
     console.log("SEARCH PARAMS",searchParams)
@@ -68,4 +68,4 @@ const page = (props: Props) => {
     )
 }
 
-export default page
+export default Page
