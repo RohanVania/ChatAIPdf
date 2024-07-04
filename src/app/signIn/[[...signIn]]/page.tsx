@@ -30,7 +30,7 @@ const Page = (props: Props) => {
                             )} className="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100 w-full ">
                                 <div className="flex items-center">
                                     <div className="px-2 py-  ">
-                                        <Image alt="logo" src={`https://authjs.dev/img/providers${provider?.style?.logo}`} width={1000} height={1000} className="w-[27px] aspect-square" />
+                                        <Image alt="logo" src={`https://authjs.dev/img/providers${provider?.style?.logo}`}  width={1000} height={1000} className="w-[27px] aspect-square" />
                                     </div>
                                     <h1 className="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Sign in with {provider?.name}</h1>
                                 </div>

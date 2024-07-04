@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image"
 import logo from "../../public/download.png"
+import {useSession} from "next-auth/react"
 
 export default function Home() {
   const router = useRouter();
+  const {data,status}=useSession();
+  console.log(data,status)
   return (
     <>
 
@@ -21,10 +24,9 @@ export default function Home() {
           <div className="flex flex-wrap gap-3 justify-center mt-6 mb-2  items-center">
             <Button onClick={() => router.push("/chat")}>Go to Chats</Button>
             <Button onClick={() => router.push("/extra")} >Manage Subscription</Button>
-            {
-              false &&
-              <div className="w-[52px] aspect-square bg-blue-400 rounded-full overflow-hidden">
-                <Image src="https://avatars.githubusercontent.com/u/139475519" className="object-cover bg-top" alt="Person-Image" width={52} height={52} />
+            { status==='authenticated' &&
+              <div className="w-[52px] aspect-square  rounded-full overflow-hidden ml-4" onClick={()=>console.log("User")}>
+                <Image src={data?.user?.image as string} className="object-cover bg-top" alt="Person-Image" width={52} height={52} />
               </div>
             }
           </div>
