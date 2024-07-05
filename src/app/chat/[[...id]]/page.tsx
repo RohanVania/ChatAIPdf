@@ -14,7 +14,6 @@ type Props = {
   }
 }
 
-
 async function getData(userid: string) {
   const res = await axios.post(Routes.getpdfData, {
     userid: "1234"
@@ -25,12 +24,12 @@ async function getData(userid: string) {
 
 
 async function Chat({ params }: Props) {
-  console.log("Params =>", params);
+
 
   //* This will be the authentication Id using some authentication eg clerk,  
   const userId = true;
   if (!userId) {
-    return redirect("/error")
+    return redirect("/signIn")
   }
 
   const AllpdfForAUser = await getData("1234");

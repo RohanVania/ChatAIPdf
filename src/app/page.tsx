@@ -9,7 +9,7 @@ import {useSession} from "next-auth/react"
 export default function Home() {
   const router = useRouter();
   const {data,status}=useSession();
-  console.log(data,status)
+  console.log(data,status);
   return (
     <>
 
@@ -25,7 +25,8 @@ export default function Home() {
             <Button onClick={() => router.push("/chat")}>Go to Chats</Button>
             <Button onClick={() => router.push("/extra")} >Manage Subscription</Button>
             { status==='authenticated' &&
-              <div className="w-[52px] aspect-square  rounded-full overflow-hidden ml-4" onClick={()=>console.log("User")}>
+              <div className="w-[52p
+              x] aspect-square  rounded-full overflow-hidden ml-4" onClick={()=>console.log("User")}>
                 <Image src={data?.user?.image as string} className="object-cover bg-top" alt="Person-Image" width={52} height={52} />
               </div>
             }
@@ -37,7 +38,6 @@ export default function Home() {
         </div>
 
       </div>
-
 
     </>
   );

@@ -44,11 +44,9 @@ const FileUpload = (props: Props) => {
                 }
                 
             }
-            
-            
+                        
     });
 
-    
 
     const { getInputProps, getRootProps } = useDropzone({
         accept: { "application/pdf": [".pdf"] },  //* Only Pdf Files Allowed
@@ -64,7 +62,6 @@ const FileUpload = (props: Props) => {
                 console.log("Something went wrong during upload")
                 return;
             }
-
 
             // callBackend(res as FileData)
 

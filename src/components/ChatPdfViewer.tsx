@@ -14,6 +14,7 @@ const ChatPdfViewer = ({ pdf_url }: Props) => {
 
   // Function to handle the onLoad event of the iframe
   const handleLoad = () => {
+    console.log("loading")
     setIsLoading(false); // Set isLoading to false when the iframe content has loaded
   };
 
