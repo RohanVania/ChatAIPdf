@@ -1,34 +1,46 @@
 
-import {Configuration,OpenAIApi} from "openai-edge"
+import { Configuration, OpenAIApi } from "openai-edge"
 import { NextResponse } from "next/server"
-import {OpenAIStream,StreamingTextResponse,Message} from "ai"
-import {getContext} from "@/lib/context";
+import { OpenAIStream, StreamingTextResponse, Message } from "ai"
+import { getContext } from "@/lib/context";
+import { db } from "@/lib/db";
+import { messages as messageTable } from "@/lib/db/schema"
 
 
-const configuration=new Configuration({
-    apiKey:process.env.NEXT_PUBLIC_OPENAI_API_KEY
+const configuration = new Configuration({
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY
 })
 
-const openai=new OpenAIApi(configuration)
+const openai = new OpenAIApi(configuration)
 
 
-export const runtime='edge'
+export const runtime = 'edge'
 
-export async function POST(req:Request,res:NextResponse){
-    try{
-        const {messages,chatid}=await req.json();
+export async function POST(req: Request, res: NextResponse) {
+    try {
+        const { messages, chatid } = await req.json();
 
-        console.log("Message =>",messages)
-        console.log("Chat ID =>",chatid);
+        console.log("Message =>", messages)
+        console.log("Chat ID =>", chatid);
 
-        const latestText=messages[messages.length-1];
-        const getContextData=await getContext(latestText,chatid);
+        //~ Why we dont save here,IMP Save this chat data in chat-table
+        // const resdb = await db.insert(messageTable).values({
+        //     chatId: chatid,
+        //     content: messages[0].content,
+        //     role: messages[0].role
+        // })
+
+        // console.log(resdb);
+
+
+        const latestText = messages[messages.length - 1];
+        const getContextData = await getContext(latestText, chatid);
 
         // console.log("Get Context",getContextData);
 
-        const prompt={
-            role:"system",
-            content:`AI assistant is a brand new, powerful, human-like artificial intelligence.
+        const prompt = {
+            role: "system",
+            content: `AI assistant is a brand new, powerful, human-like artificial intelligence.
             The traits of AI include expert knowledge, helpfulness, cleverness, and articulateness.
             AI is a well-behaved and well-mannered individual.
             AI is always friendly, kind, and inspiring, and he is eager to provide vivid and thoughtful responses to the user.
@@ -44,27 +56,38 @@ export async function POST(req:Request,res:NextResponse){
             `
         }
 
-        const response= await openai.createChatCompletion({
-            model:"gpt-3.5-turbo",
-            messages:[
-                prompt,...messages.filter((message:Message)=>{return message.role==="user"})
+        const response = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: [
+                prompt, ...messages.filter((message: Message) => { return message.role === "user" })
             ],
-            stream:true,
-            
+            stream: true,
+
         })
 
-        const stream=OpenAIStream(response);
-        const responseText=new StreamingTextResponse(stream);
-        
-        
+        //** We save both message here, because if user send some message and there is some issue with ai in open ai or anything the user message will still be saved */
+        // ** But I want to save message only when we get some response
+        const stream = OpenAIStream(response, {
+            onCompletion: async (data) => {
+                await db.insert(messageTable).values([
+                    { chatId: chatid, content: messages[0].content, role: messages[0].role },
+                    { chatId: chatid, content: data, role: 'ai' }
+                ]);
+                console.log("On Completion Data =>", data);
+            }
+        });
+        const responseText = new StreamingTextResponse(stream);
+
+
 
         return responseText;
 
         // return NextResponse.json({message:"Success",status:200})
 
     }
-    catch(err){
-        console.log("Error in Chat Route Backend =>",err);
+    catch (err) {
+        console.log("Error in Chat Route Backend =>", err);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
     }
 }
 

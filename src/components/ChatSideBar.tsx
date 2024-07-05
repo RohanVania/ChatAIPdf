@@ -20,7 +20,7 @@ type Props = {
 }
 
 const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
-    const router=useRouter();
+    const router = useRouter();
 
 
     const [isOpen, setIsOpen] = useState(true);
@@ -102,7 +102,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
                 !isOpen &&
                 <div className='p-2  justify-between items-center  absolute top-[8px] left-[8px] z-[10] '>
                     <div className=" ml-auto rounded-full overflow-hidden">
-                        
+
                         <FaAngleDoubleRight className={` text-[#5900F2] bg-white text-4xl p-2 rounded-full  cursor-pointer border-[2px]   `} onClick={toggleSidebar} />
                     </div>
                 </div>
@@ -116,7 +116,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
             >
 
                 <div className='p-4 flex justify-between items-center '>
-                    <div className="w-[40px] aspect-square  rounded-lg overflow-hidden cursor-pointer" onClick={()=>{router.push("/")}}>
+                    <div className="w-[40px] aspect-square  rounded-lg overflow-hidden cursor-pointer" onClick={() => { router.push("/") }}>
                         <Image src={logo} alt="logo-pdf" className="rounded-lg w-full h-full " />
                     </div>
                     <div className=" ml-aut ">
@@ -154,7 +154,8 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
                         {
                             allChatPdfForGivenUser?.map((chat) => {
                                 return (
-                                    <Link key={chat.id} href={`/chat/${chat.id}`} >
+
+                                    <Link key={chat.id} href={`/chat/${chat.id}`} className="border-red-100 border-[1px]">
 
                                         <div className={
                                             cn('rounded-lg rounded-br-none rounded-tr-none p-3 text-slate-300 flex items-center', {
@@ -179,10 +180,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
                     <div className="absolute bottom-0 w-ful  m bg-pink-80 p-2 py-3">
                         <div className="flex items-center gap-2 mx-auto text-sm text-slate-500 flex-wra">
                             <Link href={"/"}>
-                                <Button className="bg-blue-700">Home</Button>
-                            </Link>
-                            <Link href={"/"}>
-                                <Button className="bg-blue-700">Home</Button>
+                                    <Button className="bg-blue-700 ">Home</Button>
                             </Link>
                         </div>
                     </div>

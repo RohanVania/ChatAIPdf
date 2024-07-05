@@ -3,6 +3,7 @@ import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3
 import dotenv from "dotenv"
 dotenv.config({ path: "../../.env" })
 
+//* This is connection or configuration for S3
 export const client = new S3Client({
     region: process.env.NEXT_PUBLIC_AWS_S3_REGION,
     credentials: {
@@ -19,12 +20,11 @@ export const client = new S3Client({
  * @returns File name and File Key
  */
 
-// * Uploading file to 
-// * Progress feature left
+// * Uploading file to S3
+// ~ Progress feature left
 export const upload = async (file: File) => {
     try {
         const fileKey = "uploads/" + Date.now() + file.name.replaceAll(" ", "");
-
 
         const command = new PutObjectCommand({
             Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME as string,
@@ -33,6 +33,7 @@ export const upload = async (file: File) => {
             ContentType: file.type,
             BucketKeyEnabled:true
         })
+
         const res = await client.send(command);
         // console.log(res);
         return {

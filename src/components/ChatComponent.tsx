@@ -6,6 +6,7 @@ import { useChat } from "ai/react"
 import MessageList from './MessageList'
 import { RiSendPlaneFill } from "react-icons/ri";
 import { cn } from '@/lib/utils'
+import toast from 'react-hot-toast'
 
 
 type Props = {
@@ -17,6 +18,10 @@ const ChatComponent = ({ activeId }: Props) => {
     api: '/api/chat',
     body: {
       chatid: activeId
+    },
+    
+    onError:(err)=>{
+      toast.error("Something went wrong ! Try later",{id:"error-chat"});
     }
   });
 

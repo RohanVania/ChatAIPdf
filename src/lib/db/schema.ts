@@ -1,7 +1,7 @@
 import { integer, pgTable, serial, text, timestamp, varchar,pgEnum, primaryKey } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "next-auth/adapters"
  
-export const roleEnum=pgEnum('role',['systemdefined','userdefined'])
+export const roleEnum=pgEnum('role',['user','ai'])
 
 // export const users = pgTable('users', {
 //   id: serial('id').primaryKey(),
