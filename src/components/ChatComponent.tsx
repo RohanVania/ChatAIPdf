@@ -7,21 +7,45 @@ import MessageList from './MessageList'
 import { RiSendPlaneFill } from "react-icons/ri";
 import { cn } from '@/lib/utils'
 import toast from 'react-hot-toast'
+import { useQuery } from '@tanstack/react-query'
 
 
 type Props = {
   activeId?: number
 }
 
+
+const callToMessagesApi=async(chatid:number)=>{
+  try{
+    const apiresult=await fetch('http://localhost:3000/api/getMessages',{
+      method:'POST',
+      body:JSON.stringify({chatid:chatid}),
+    })
+    await apiresult.json();
+  }catch(err){
+    console.log("Error in Calling Get Message API ",err);
+    throw err;
+  }
+}
+
 const ChatComponent = ({ activeId }: Props) => {
+
+    useQuery({
+      queryKey:["chat",activeId],
+      queryFn:async ()=>{await callToMessagesApi(activeId as number)},
+      
+
+    })
+
   const { input, handleInputChange, handleSubmit, messages } = useChat({
     api: '/api/chat',
     body: {
       chatid: activeId
     },
-    
-    onError:(err)=>{
-      toast.error("Something went wrong ! Try later",{id:"error-chat"});
+
+
+    onError: (err) => {
+      toast.error("Something went wrong ! Try later", { id: "error-chat" });
     }
   });
 
@@ -36,7 +60,7 @@ const ChatComponent = ({ activeId }: Props) => {
 
       {/* Message List */}
       {
-        messages.length>0 &&
+        messages.length > 0 &&
         <div
           className={cn("max-h-full overflow-y-auto ", {
             "pb-[90px]": messages.length > 0
