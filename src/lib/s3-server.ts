@@ -11,7 +11,7 @@ import { PDFLoader } from "langchain/document_loaders/fs/pdf"
  * @param filekey 
  * @returns
  * This function helps us to find the file in s3 using Filekey , which we store in temp location to extract all the text from pdf.
- * We use PDF loader to extract all the text from the file,  and whichj we load using lang chain function to create array of each page
+ * We use PDF loader to extract all the text from the file,  and which we load using lang chain function to create array of each page
  */
 
 export async function downloadFromS3(filekey: string) {
@@ -22,7 +22,6 @@ export async function downloadFromS3(filekey: string) {
             Key: filekey
         })
         const rootPath=path.resolve("./");
-        console.log(__dirname);
         const file_name = rootPath+`/temp/upload${Date.now()}.pdf`
 
         const file = await client.send(command)
@@ -33,6 +32,7 @@ export async function downloadFromS3(filekey: string) {
         //* Extracting text from the loaded file
         const loader=new PDFLoader(file_name as string)
 
+        console.log("Loader =>",loader);
 
         return loader;
 

@@ -1,11 +1,12 @@
+import dotenv from "dotenv"
+import md5 from "md5"
+dotenv.config({ path: "../../.env" })
+ import fs from "fs"
 import { Pinecone } from "@pinecone-database/pinecone"
 import { Document, RecursiveCharacterTextSplitter } from "@pinecone-database/doc-splitter"
 import { downloadFromS3 } from "@/lib/s3-server"
-import dotenv from "dotenv"
 import { getEmbeddings } from "./embeddings"
-import md5 from "md5"
 import { convertToAscii } from "./utils"
-dotenv.config({ path: "../../.env" })
 
 type VectorMetadata = {
     text: string;
@@ -68,6 +69,7 @@ export async function loadS3toPinecone(filekey: string) {
         const vectorInPinecone = await connectedToIndex.namespace(asciiFileKey).upsert(vector)
         console.log("Vector In Pinecone =>",vectorInPinecone)
         // console.log(documents[0])
+        fs.unlinkSync(langchainLoader?.filePathOrBlob as string);
         return documents[0];
 
     } catch (err) {

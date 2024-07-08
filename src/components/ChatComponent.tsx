@@ -67,6 +67,7 @@ const ChatComponent = ({ activeId }: Props) => {
     }
   }, [messages]);
 
+
   return (
     <div className='relative  overflow-y-hidden h-full max-h-full'>
 
