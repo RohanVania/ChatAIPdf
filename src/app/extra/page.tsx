@@ -3,9 +3,10 @@ import React from 'react'
 function page() {
   return (
     <div>
-      Hello
+      Extra Page
     </div>
   )
 }
 
 export default page
+
