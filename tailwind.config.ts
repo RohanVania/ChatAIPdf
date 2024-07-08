@@ -82,6 +82,7 @@ const config = {
         'wrapper-div':{'max':'1010px'},
         'chatbar-wrap':{'max':'998px'},
         
+        
       }
     },
   },

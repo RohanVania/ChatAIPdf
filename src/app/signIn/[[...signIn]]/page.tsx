@@ -15,7 +15,7 @@ const Page = (props: Props) => {
     return (
         <div className="py-4 px-4  absolute w-full top-[50%] translate-y-[-50%]">
             <div className="flex  bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
-                <div className="hidden lg:block lg:w-1/2 bg-cover" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80')" }}>
+                <div className="hidden lg:block lg:w-1/2 bg-cover aspect-video" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80')" }}>
                 </div>
                 <div className="w-full p-8 lg:w-1/2">
                     <p className="text-xl text-gray-600 text-center">Welcome back!</p>
@@ -27,7 +27,7 @@ const Page = (props: Props) => {
                                 // callbackUrl: "/"
                                 callbackUrl: searchParams.get("callbackUrl")!
                             }
-                            )} className="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100 w-full ">
+                            )} className="flex items-center justify-center mt-6 text-white rounded-lg shadow-md hover:bg-gray-100 w-full ">
                                 <div className="flex items-center">
                                     <div className="px-2 py-  ">
                                         <Image alt="logo" src={`https://authjs.dev/img/providers${provider?.style?.logo}`}  width={1000} height={1000} className="w-[27px] aspect-square" />
@@ -38,7 +38,7 @@ const Page = (props: Props) => {
                         })
                     }
 
-                    <div className="mt-4 flex items-center justify-between">
+                    {/* <div className="mt-4 flex items-center justify-between">
                         <span className="border-b w-1/5 lg:w-1/4"></span>
                         <a href="#" className="text-xs text-center text-gray-500 uppercase">or login with email</a>
                         <span className="border-b w-1/5 lg:w-1/4"></span>
@@ -56,12 +56,12 @@ const Page = (props: Props) => {
                     </div>
                     <div className="mt-8">
                         <button className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Login</button>
-                    </div>
-                    <div className="mt-4 flex items-center justify-between">
+                    </div> */}
+                    {/* <div className="mt-4 flex items-center justify-between">
                         <span className="border-b w-1/5 md:w-1/4"></span>
                         <a href="#" className="text-xs text-gray-500 uppercase">or sign up</a>
                         <span className="border-b w-1/5 md:w-1/4"></span>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
