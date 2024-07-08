@@ -46,7 +46,6 @@ export default function Home() {
           </div>
           <div className="flex flex-wrap gap-3 justify-center mt-6 mb-2  items-center">
             <Button onClick={() => router.push("/chat")}>Go to Chats</Button>
-            <Button onClick={() => router.push("/extra")} >Manage Subscription</Button>
             {status === 'authenticated' &&
               <div className="relative z-[100]">
                 <div className="w-[52px] aspect-square   top-0  rounded-full overflow-hidden ml-4 cursor-pointer" onClick={toggleDropDown}>

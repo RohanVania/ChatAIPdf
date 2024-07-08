@@ -7,7 +7,8 @@ import { useMutation } from '@tanstack/react-query';
 import axios from "axios"
 import { Routes } from "@/lib/routes/index"
 import toast from 'react-hot-toast';
-import {useRouter} from "next/navigation" 
+import { useRouter} from "next/navigation" 
+import { useSession } from "next-auth/react";
 
 type Props = {
     classname?:string
@@ -21,6 +22,7 @@ type FileData = {
 const FileUpload = (props: Props) => {
 
     const router=useRouter();
+    const {data,status}=useSession();
 
     /**
      *  This Function Calls the Backend Api and sends the filekey and filename
@@ -55,6 +57,11 @@ const FileUpload = (props: Props) => {
         //* When we drop the file it gets uploaded in S3
         onDrop: async (file) => {
             console.log(file);
+            if(data==null || status!=='authenticated'){
+                router.push('/chat');
+                return
+                
+            }
             const res = await upload(file[0]);
             // console.log("Data that upload function returned",res);
 
