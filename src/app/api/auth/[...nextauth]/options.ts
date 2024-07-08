@@ -52,27 +52,27 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async jwt({ token, user }) {
-      console.log("Token JWT =>", token);
-      console.log("User SESSION", user);
+      // console.log("Token JWT =>", token);
+      // console.log("User SESSION", user);
       if (user) {
         console.log("User Token asudgasuid")
         return { ...token, ...user };
       }
       return token;
     },
-    async redirect({url,baseUrl}) {
-      if (url.startsWith("/")) {
-        return `${baseUrl}${url}`}
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) 
-        {
-          return url
-        }
-      return baseUrl
-    },
+    // async redirect({url,baseUrl}) {
+    //   if (url.startsWith("/")) {
+    //     return `${baseUrl}${url}`}
+    //   // Allows callback URLs on the same origin
+    //   else if (new URL(url).origin === baseUrl) 
+    //     {
+    //       return url
+    //     }
+    //   return baseUrl
+    // },
     async session({ session, token }) {
-      console.log("Session =>", session);
-      console.log("Token =>", token);
+      // console.log("Session =>", session);
+      // console.log("Token =>", token);
       // session.user = token.user as any;// you can also declare type
       return session;
     },

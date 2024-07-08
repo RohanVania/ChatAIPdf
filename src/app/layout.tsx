@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import { Toaster } from "react-hot-toast";
-import { getSession } from "next-auth/react";
+// import { getSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,13 +19,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
  
-  const session=await getSession();
+  // const session=await getSession();
  
-  console.log("Layout Session =>",session);
- console.log(await getServerSession());
-
+  // console.log("Layout Session =>",session);
+ console.log("SERVER SESSION",await getServerSession());
+  const serverSession=await getServerSession();
   return (
-    <Providers session={session} >
+    <Providers session={serverSession} >
       <html lang="en">
         <body className={inter.className}>
           {children}
