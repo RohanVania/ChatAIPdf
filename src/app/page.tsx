@@ -9,7 +9,6 @@ import { useState, useRef, useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
-  console.log(useSession());
   const { data, status } = useSession();
   console.log(data, status);
 
@@ -56,7 +55,7 @@ export default function Home() {
                 {showDropdown && (
                   <div
                     ref={dropdownRef}
-                    className="bg-slate-200  px-4 py-2 cursor-pointer  absolute top-[46px] smallnavigation:left-[0px] left-[49px]  w-[110px] text-center"
+                    className="bg-slate-200  px-4 py-2 cursor-pointer  absolute top-[46px] smallnavigation:left-[0px] left-  w-[110px] text-center"
                     onClick={()=>{signOut()}}
                     >
                     <p className="text-black "> Sign Out</p>
