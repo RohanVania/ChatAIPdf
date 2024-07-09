@@ -28,13 +28,13 @@ async function getData(userid: string) {
 async function Chat({ params }: Props) {
 
   //* This will be the authentication Id using some authentication eg clerk,  
-  const session=await getServerSession(authOptions);
-  
-  if(!session){
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
     console.log("You are not allowed to see this page");
     redirect("/")
   }
- 
+
   const userId = session?.user.id;
   if (!userId) {
     return redirect("/signIn")
@@ -60,10 +60,10 @@ async function Chat({ params }: Props) {
 
   return (
     <section className=' max-h-screen w-full  relative  h-screen overflow-y-auto '>
-      <div className='w-full h-full  flex max-h-screen  relative'>
+      <div className='w-full h-full  flex    relative'>
 
         {/* Chat Side Bar */}
-        <div className='h-full  max-h-scree absolute lg:relative z-40'>
+        <div className='h-full flex-1  max-h-scree absolute lg:relative z-40 '>
           <ChatSideBar
             allChatPdfForGivenUser={AllpdfForAUser}
             activePdfId={activePdf?.id}
@@ -82,7 +82,7 @@ async function Chat({ params }: Props) {
           </div>
 
           {/* Chat Component */}
-          <div className='  flex-1 w-full whitespace-normal break-words h-ful max-h-[99.4%]   chatbar-wrap:max-h-[440px]'>
+          <div className='  flex-1 w-full whitespace-normal break-words h-full max-h-screen   chatbar-wrap:max-h-[440px] overflow-y-hidden'>
             <ChatComponent
               activeId={activePdf?.id}
             // chatid={chats[0].id} 
