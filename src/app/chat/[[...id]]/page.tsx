@@ -7,6 +7,8 @@ import ChatComponent from '@/components/ChatComponent';
 import axios from 'axios';
 import { Routes } from '@/lib/routes';
 import FileUpload from '@/components/FileUpload';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/app/api/auth/[...nextauth]/options';
 
 type Props = {
   params: {
@@ -16,7 +18,7 @@ type Props = {
 
 async function getData(userid: string) {
   const res = await axios.post(Routes.getpdfData, {
-    userid: "1234"
+    userid: userid
   }
   );
   return res.data.res as DrizzleChat[]
@@ -26,12 +28,19 @@ async function getData(userid: string) {
 async function Chat({ params }: Props) {
 
   //* This will be the authentication Id using some authentication eg clerk,  
-  const userId = true;
+  const session=await getServerSession(authOptions);
+  
+  if(!session){
+    console.log("You are not allowed to see this page");
+    redirect("/")
+  }
+ 
+  const userId = session?.user.id;
   if (!userId) {
     return redirect("/signIn")
   }
 
-  const AllpdfForAUser = await getData("1234");
+  const AllpdfForAUser = await getData(userId as string);
 
   if (params?.id?.length > 1) {
     return redirect("/error")

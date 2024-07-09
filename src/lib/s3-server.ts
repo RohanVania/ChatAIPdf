@@ -31,21 +31,14 @@ export async function downloadFromS3(filekey: string) {
         const file_name = rootPath + `/temp/upload${Date.now()}.pdf`
 
         const file = await client.send(command)
-        console.log(1)
         //* Transforming File Body to Byte Array which can be stored in Buffer
         const array = await file.Body?.transformToByteArray();
-        console.log(2)
 
         //* Storing file in temp folder
         fs.writeFileSync(file_name, Buffer.from(array as Uint8Array))
-        console.log(3)
 
         //* Extracting text from the loaded file
         const loader = new PDFLoader(file_name as string)
-        console.log(4)
-
-        console.log("Loader =>", loader);
-
         return loader;
 
     } catch (err) {

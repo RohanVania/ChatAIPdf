@@ -5,6 +5,7 @@ import Providers from "@/components/Providers";
 import { Toaster } from "react-hot-toast";
 // import { getSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
+import authOptions from "./api/auth/[...nextauth]/options";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,9 @@ export default async function RootLayout({
   // console.log("Layout Session =>",session);
   //  console.log("SERVER SESSION",await getServerSession());
 
-  const serverSession = await getServerSession();
+  const serverSession = await getServerSession(authOptions);
+  console.log("Layout Check of Session =>",serverSession);
+  
   return (
     <Providers session={serverSession} >
       <html lang="en">

@@ -6,13 +6,13 @@ import {getObjectUrl} from "@/lib/s3"
 
 export async function POST(request:Request,response:Response){
     try{
-        const {filename,filekey}=await request.json();
+        const {filename,filekey,userid}=await request.json();
 
         //* This store the data in Pinecone db which is a vector database used for AI operation for matching
         const data=await loadS3toPinecone(filekey);
 
         const result=await db.insert(chatPdf).values({
-            userId:"1234",
+            userId:userid,
             fileKey:filekey,
             pdfName:filename,
             pdfUrl:getObjectUrl(filekey)as string
