@@ -71,11 +71,9 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/signIn",
-    error: "/error"
   },
   // adapter:DrizzleAdapter(db) 
 }
-
 
 
 

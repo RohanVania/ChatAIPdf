@@ -49,7 +49,7 @@ export default function Home() {
             <Button onClick={() => router.push("/chat")}>Go to Chats</Button>
             {
               status!=='authenticated' &&
-              <Button className="flex items-center gap-3" onClick={() => router.push("/chat")} >Log In to Get Started <HiMiniArrowRightStartOnRectangle className="text-[20px]"/></Button>
+              <Button className="flex items-center gap-3" onClick={() => router.push("/signIn")} >Log In to Get Started <HiMiniArrowRightStartOnRectangle className="text-[20px]"/></Button>
             }
 
             {status === 'authenticated' &&
