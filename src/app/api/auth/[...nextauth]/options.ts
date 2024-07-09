@@ -1,4 +1,4 @@
-import { NextAuthOptions } from "next-auth"
+import { Account, NextAuthOptions, Profile, User } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import { Provider } from "next-auth/providers/index";
@@ -51,6 +51,7 @@ export const authOptions: NextAuthOptions = {
 
 
   callbacks: {
+   
     async jwt({ token, user }) {
       // console.log("Token JWT =>", token);
       // console.log("User SESSION", user);
@@ -60,16 +61,7 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-    // async redirect({url,baseUrl}) {
-    //   if (url.startsWith("/")) {
-    //     return `${baseUrl}${url}`}
-    //   // Allows callback URLs on the same origin
-    //   else if (new URL(url).origin === baseUrl) 
-    //     {
-    //       return url
-    //     }
-    //   return baseUrl
-    // },
+    
     async session({ session, token }) {
       // console.log("Session =>", session);
       // console.log("Token =>", token);
@@ -78,7 +70,8 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/signIn"
+    signIn: "/signIn",
+    error: "/error"
   },
   // adapter:DrizzleAdapter(db) 
 }

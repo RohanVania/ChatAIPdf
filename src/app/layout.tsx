@@ -18,12 +18,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
- 
+
   // const session=await getSession();
- 
   // console.log("Layout Session =>",session);
- console.log("SERVER SESSION",await getServerSession());
-  const serverSession=await getServerSession();
+  //  console.log("SERVER SESSION",await getServerSession());
+
+  const serverSession = await getServerSession();
   return (
     <Providers session={serverSession} >
       <html lang="en">

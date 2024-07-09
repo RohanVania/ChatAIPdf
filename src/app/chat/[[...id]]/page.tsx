@@ -25,7 +25,6 @@ async function getData(userid: string) {
 
 async function Chat({ params }: Props) {
 
-
   //* This will be the authentication Id using some authentication eg clerk,  
   const userId = true;
   if (!userId) {
@@ -44,12 +43,12 @@ async function Chat({ params }: Props) {
   if (!params.id) {
     activePdf = null
   }
-  
+
   else {
     activePdf = AllpdfForAUser.find((chat: DrizzleChat) => chat.id === parseInt(params?.id[0]));
   }
 
-  
+
   return (
     <section className=' max-h-screen w-full  relative  h-screen overflow-y-auto '>
       <div className='w-full h-full  flex max-h-screen  relative'>
@@ -66,10 +65,10 @@ async function Chat({ params }: Props) {
         <div className='flex w-full justify-between chatbar-wrap:justify-center flex-wrap  gap-x-[50px]  overflow-y-hidde h-full '>
 
           <div className='  w-full max-w-[810px] max-h-full bg-red-40 mx-auto  h-[500px'>
-            { 
-              !id ? 
-              <FileUpload classname='h-[100%] ' />
-              : <ChatPdfViewer pdf_url={activePdf?.pdfUrl} /> 
+            {
+              !id ?
+                <FileUpload classname='h-[100%] ' />
+                : <ChatPdfViewer pdf_url={activePdf?.pdfUrl} />
             }
           </div>
 
