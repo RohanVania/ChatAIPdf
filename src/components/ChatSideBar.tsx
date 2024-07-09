@@ -155,7 +155,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
                             allChatPdfForGivenUser?.map((chat) => {
                                 return (
 
-                                    <Link key={chat.id} href={`/chat/${chat.id}`} className="border-red-100 border-[1px]">
+                                    <Link key={chat.id} href={`/chat/${chat.id}`} className="">
 
                                         <div className={
                                             cn('rounded-lg rounded-br-none rounded-tr-none p-3 text-slate-300 flex items-center', {
@@ -167,9 +167,6 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
                                             <p className="bg-red-20 w-full text-sm truncate  ">{chat.pdfName}</p>
                                         </div>
                                     </Link>
-
-
-
                                 )
                             })
                         }

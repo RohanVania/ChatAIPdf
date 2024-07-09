@@ -9,7 +9,6 @@ import { cn } from '@/lib/utils'
 import toast from 'react-hot-toast'
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams, usePathname } from 'next/navigation'
-import { Message } from 'ai'
 
 type Props = {
   activeId?: number
@@ -44,7 +43,7 @@ const ChatComponent = ({ activeId }: Props) => {
     },
   })
 
-  console.log("Previous Messages =>", data);
+  // console.log("Previous Messages =>", data);
 
   const { input, handleInputChange, handleSubmit, messages } = useChat({
     api: '/api/chat',

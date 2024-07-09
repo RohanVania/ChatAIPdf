@@ -21,23 +21,35 @@ export async function downloadFromS3(filekey: string) {
             Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME as string,
             Key: filekey
         })
-        const rootPath=path.resolve("./");
-        const file_name = rootPath+`/temp/upload${Date.now()}.pdf`
+
+        const tempDir = path.resolve("./temp");
+        if (!fs.existsSync(tempDir)) {
+            fs.mkdirSync(tempDir, { recursive: true });
+        }
+
+        const rootPath = path.resolve("./");
+        const file_name = rootPath + `/temp/upload${Date.now()}.pdf`
 
         const file = await client.send(command)
+        console.log(1)
         //* Transforming File Body to Byte Array which can be stored in Buffer
         const array = await file.Body?.transformToByteArray();
+        console.log(2)
+
         //* Storing file in temp folder
         fs.writeFileSync(file_name, Buffer.from(array as Uint8Array))
-        //* Extracting text from the loaded file
-        const loader=new PDFLoader(file_name as string)
+        console.log(3)
 
-        console.log("Loader =>",loader);
+        //* Extracting text from the loaded file
+        const loader = new PDFLoader(file_name as string)
+        console.log(4)
+
+        console.log("Loader =>", loader);
 
         return loader;
 
     } catch (err) {
-        console.log("Something went wrong in download from s3",err);
+        console.log("Something went wrong in download from s3", err);
         return null;
     }
 
