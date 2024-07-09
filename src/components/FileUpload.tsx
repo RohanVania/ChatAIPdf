@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios from "axios"
 import { Routes } from "@/lib/routes/index"
 import toast from 'react-hot-toast';
-import { useRouter} from "next/navigation" 
+import { redirect, useRouter} from "next/navigation" 
 import { useSession } from "next-auth/react";
 
 type Props = {
@@ -24,6 +24,9 @@ const FileUpload = (props: Props) => {
     const router=useRouter();
     const {data,status}=useSession();
 
+    
+
+    const userIDFROMSESSION=data?.user.id;
     /**
      *  This Function Calls the Backend Api and sends the filekey and filename
      * 
@@ -34,7 +37,8 @@ const FileUpload = (props: Props) => {
 
                     const axiosResult = await axios.post(Routes.createchat, {
                         filename: data.filename,
-                        filekey: data.filekey
+                        filekey: data.filekey,
+                        userid:userIDFROMSESSION
                     })
 
                     console.log("Calling the Backend Api", axiosResult);
@@ -88,8 +92,6 @@ const FileUpload = (props: Props) => {
                     console.log(err);
                 }
             })
-
-            
 
         }
 

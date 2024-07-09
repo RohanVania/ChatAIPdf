@@ -1,12 +1,12 @@
+import { db } from "@/lib/db";
 import { Account, NextAuthOptions, Profile, User } from "next-auth"
+import { Adapter } from "next-auth/adapters";
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import { Provider } from "next-auth/providers/index";
-// import CredentialsProvider from "next-auth/providers/credentials";
+import { DrizzleAdapter } from "@auth/drizzle-adapter"
+import { use } from "react";
 // import { OAuthConfig } from "next-auth/providers/index";
-// import {DrizzleAdapter} from "@auth/drizzle-adapter"
-// import type { Adapter } from "next-auth/adapters";
-// import { db } from "@/lib/db";
 
 interface CustomUser {
   id: string;
@@ -51,28 +51,59 @@ export const authOptions: NextAuthOptions = {
 
 
   callbacks: {
-   
-    async jwt({ token, user }) {
-      // console.log("Token JWT =>", token);
-      // console.log("User SESSION", user);
-      if (user) {
-        console.log("User Token asudgasuid")
-        return { ...token, ...user };
-      }
+  //   async jwt({ user, account, token }) {
+  //     console.log("JWT IS CALLED -<", user, account, token);
+  //     return token;
+  //   },
+// }
+
+    // async signIn({ user, account, profile, email, credentials }) {
+    //   console.log("Calling Sign IN")
+    //   return true;
+    // },
+    // async redirect({ url, baseUrl }) {
+    //   console.log("Calling Redirect")
+
+    //   return url.startsWith(baseUrl) ? url : baseUrl;
+    // },
+    async jwt({ token, account,user }) {
+      console.log("Calling JWT")
+      console.log(token);
+      console.log(user)
+      
       return token;
     },
-    
-    async session({ session, token }) {
-      // console.log("Session =>", session);
-      // console.log("Token =>", token);
-      // session.user = token.user as any;// you can also declare type
+    async session({ session, token, user }) {
+      console.log("Calling Session")
+      // console.log(user)
+      if (user && user.id) {
+        session.user.id = user.id;
+      }
+      console.log(session);
       return session;
     },
+    // async signIn({ user, account, profile, email, credentials }) {
+    //   console.log("User in SignIn =>", user);
+    //   console.log("Account in Sign In =>", account);
+    //   console.log("Profile in Sign In =>", profile);
+  
+    //   const isAllowedToSignIn = account;
+    //   if (isAllowedToSignIn) {
+    //     return {user,account,profile}
+    //   } else {
+    //     // Return false to display a default error message
+    //     return '/unauthorized';
+    //     // Or you can return a URL to redirect to:
+    //   }
+    // },
+  
+    
   },
   pages: {
     signIn: "/signIn",
   },
-  // adapter:DrizzleAdapter(db) 
+
+  adapter: DrizzleAdapter(db) as Adapter
 }
 
 
@@ -90,3 +121,4 @@ export const providerMap = authOptions.providers.map((provider: Provider) => {
 
 
 export default authOptions;
+
