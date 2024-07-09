@@ -22,7 +22,7 @@ const callToMessagesApi = async (chatid: number) => {
       body: JSON.stringify({ chatid: chatid }),
     })
     const apiResultMessages = await apiresult.json()
-    console.log("Messages", apiResultMessages);
+    // console.log("Messages", apiResultMessages);
     return apiResultMessages;
   } catch (err) {
     console.log("Error in Calling Get Message API ", err);
@@ -44,7 +44,7 @@ const ChatComponent = ({ activeId }: Props) => {
     },
   })
 
-  console.log("Data", data);
+  console.log("Previous Messages =>", data);
 
   const { input, handleInputChange, handleSubmit, messages } = useChat({
     api: '/api/chat',
