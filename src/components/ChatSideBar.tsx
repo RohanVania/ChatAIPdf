@@ -7,7 +7,7 @@ import { GoPlusCircle } from "react-icons/go";
 import { TbMessageCircle } from "react-icons/tb";
 import { Button } from './ui/button';
 import React from "react";
-import { DrizzleChat, chatPdf } from "@/lib/db/schema"
+import { DrizzleChatPDF, chatPdf } from "@/lib/db/schema"
 import Link from "next/link"
 import { cn } from "@/lib/utils";
 import logo from "../../public/download.png"
@@ -15,7 +15,7 @@ import Image from "next/image"
 import { useRouter } from "next/navigation";
 
 type Props = {
-    allChatPdfForGivenUser?: DrizzleChat[],
+    allChatPdfForGivenUser?: DrizzleChatPDF[],
     activePdfId?: number
 }
 
