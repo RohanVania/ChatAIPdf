@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { DrizzleChat, chatPdf, users } from '@/lib/db/schema';
+import { DrizzleChatPDF, chatPdf, users } from '@/lib/db/schema';
 import { redirect } from 'next/navigation';
 import ChatSideBar from "@/components/ChatSideBar"
 import ChatPdfViewer from '@/components/ChatPdfViewer';
@@ -16,12 +16,13 @@ type Props = {
   }
 }
 
-async function getData(userid: string) {
+async function getData(userid: string,providername:string) {
   const res = await axios.post(Routes.getpdfData, {
-    userid: userid
+    userid: userid,
+    provider:providername
   }
   );
-  return res.data.res as DrizzleChat[]
+  return res.data.res as DrizzleChatPDF[]
 }
 
 
@@ -36,11 +37,12 @@ async function Chat({ params }: Props) {
   }
 
   const userId = session?.user.id;
+  const providername=session?.user.provider;
   if (!userId) {
     return redirect("/signIn")
   }
 
-  const AllpdfForAUser = await getData(userId as string);
+  const AllpdfForAUser = await getData(userId as string,providername as string);
 
   if (params?.id?.length > 1) {
     return redirect("/error")
@@ -54,7 +56,7 @@ async function Chat({ params }: Props) {
   }
 
   else {
-    activePdf = AllpdfForAUser.find((chat: DrizzleChat) => chat.id === parseInt(params?.id[0]));
+    activePdf = AllpdfForAUser.find((chat: DrizzleChatPDF) => chat.id === parseInt(params?.id[0]));
   }
 
 
@@ -63,7 +65,7 @@ async function Chat({ params }: Props) {
       <div className='w-full h-full  flex    relative'>
 
         {/* Chat Side Bar */}
-        <div className='h-full flex-1  max-h-scree absolute lg:relative z-40 '>
+        <div className='h-full flex-1  max-h-scree absolute lg:relativ z-40 '>
           <ChatSideBar
             allChatPdfForGivenUser={AllpdfForAUser}
             activePdfId={activePdf?.id}
@@ -71,13 +73,14 @@ async function Chat({ params }: Props) {
         </div>
 
         {/* Chat Pdf Viewer */}
-        <div className='flex w-full justify-between chatbar-wrap:justify-center flex-wrap  gap-x-[50px]  overflow-y-hidde h-full '>
+        <div className='flex w-full justify-between chatbar-wrap:justify-center flex-col flex-wrap pdfwrap:flex-row pdfwrap:flex-wrap   gap-x-[50px]  overflow-y-aut h-full '>
 
-          <div className='  w-full max-w-[810px] max-h-full bg-red-40 mx-auto  h-[500px'>
+          <div className='  w-full max-w-[810px] max-h-full  mx-auto  h-[400px] pdfwrap:h-full '>
             {
               !id ?
                 <FileUpload classname='h-[100%] ' />
-                : <ChatPdfViewer pdf_url={activePdf?.pdfUrl} />
+                :
+                 <ChatPdfViewer pdf_url={activePdf?.pdfUrl} />
             }
           </div>
 

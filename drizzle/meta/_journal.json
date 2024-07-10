@@ -15,6 +15,20 @@
       "when": 1720199105144,
       "tag": "0001_wakeful_puff_adder",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1720624593569,
+      "tag": "0002_overjoyed_molecule_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1720624698570,
+      "tag": "0003_kind_golden_guardian",
+      "breakpoints": true
     }
   ]
 }

@@ -81,6 +81,7 @@ const config = {
         'smallnavigation':{'max':'400px'},
         'wrapper-div':{'max':'1010px'},
         'chatbar-wrap':{'max':'998px'},
+        'pdfwrap':"1000px"
         
         
       }

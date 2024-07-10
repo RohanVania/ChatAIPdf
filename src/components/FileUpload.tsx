@@ -27,6 +27,7 @@ const FileUpload = (props: Props) => {
     
 
     const userIDFROMSESSION=data?.user.id;
+    const userPROVIDERNAMEFROMSESSION=data?.user.provider;
     /**
      *  This Function Calls the Backend Api and sends the filekey and filename
      * 
@@ -38,7 +39,8 @@ const FileUpload = (props: Props) => {
                     const axiosResult = await axios.post(Routes.createchat, {
                         filename: data.filename,
                         filekey: data.filekey,
-                        userid:userIDFROMSESSION
+                        userid:userIDFROMSESSION,
+                        userprovider:userPROVIDERNAMEFROMSESSION
                     })
 
                     console.log("Calling the Backend Api", axiosResult);

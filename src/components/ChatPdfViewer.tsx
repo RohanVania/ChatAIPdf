@@ -48,14 +48,14 @@ const ChatPdfViewer = ({ pdf_url }: Props) => {
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
         <div
           style={{
-            border: '1px solid rgba(0, 0, 0, 0.3)',
-            background:"red",
+            // border: '1px solid rgba(0, 0, 0, 0.3)',
+            // background:"red",
             // height: '650px',
           }}
         >
           <Viewer fileUrl={pdf_url!} />
           </div>
-      </Worker> */}
+      </Worker> 
     </div>
     // <div className='w-full h-full iframe-scrollbar'>
     //   {isLoading && <SkeletonLoader />}

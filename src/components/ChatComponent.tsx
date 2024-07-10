@@ -68,10 +68,10 @@ const ChatComponent = ({ activeId }: Props) => {
 
 
   return (
-    <div className='relative  overflow-y-hidden h-full max-h-full'>
+    <div className='relative  overflow-y-hidden h-full max-h-ful '>
 
       {/* Header */}
-      <div className='sticky top-0 md:text-left text-center inset-x-0 p-2 bg-white h-fit mb-1'>
+      <div className='sticky top-0 md:text-left text-center inset-x-0 p-2 bg-white h-fit mb-1 z-10'>
         <h3 className='text-xl font-semibold'>PDF CHAT</h3>
       </div>
 
