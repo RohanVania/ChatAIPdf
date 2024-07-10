@@ -27,6 +27,8 @@ const Page = (props: Props) => {
                 </div>
                 <div className="w-full p-8 lg:w-1/2">
                     <p className="text-xl text-gray-600 text-center">Welcome back!</p>
+                    <p className="text-md text-gray-600 text-center mt-4 text-blue-500">Please Login to use our Service</p>
+
                     {
                         searchParams.get("error") &&
                         <p className="text-center my-6 bg-[#c94b4b] py-2 text-white font-semibold rounded-md">Try signing with different account</p>
@@ -34,7 +36,7 @@ const Page = (props: Props) => {
 
                     {
                         providerMap.map((provider) => {
-                            return <button key={provider?.id} onClick={
+                            return <button key={provider?.id}  onClick={
                                 () => {
                                     //* If else is for making sure if the callback is not provided still the nextauth works
                                     if (searchParams.get("callbackUrl")) {
@@ -55,7 +57,7 @@ const Page = (props: Props) => {
                                     }
                                 }
                             }
-                                className="flex items-center justify-center mt-6 text-white rounded-lg shadow-md hover:bg-gray-100 w-full ">
+                                className="flex items-center justify-center mt-9 text-white rounded-lg shadow-md hover:bg-gray-100 w-full ">
                                 <div className="flex items-center">
                                     <div className="px-2 py-  ">
                                         <Image alt="logo" src={`https://authjs.dev/img/providers${provider?.style?.logo}`} width={1000} height={1000} className="w-[27px] aspect-square" />
