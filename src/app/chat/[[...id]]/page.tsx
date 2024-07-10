@@ -29,7 +29,8 @@ async function getData(userid: string,providername:string) {
 async function Chat({ params }: Props) {
 
   //* This will be the authentication Id using some authentication eg clerk,  
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
+  
 
   if (!session) {
     console.log("You are not allowed to see this page");

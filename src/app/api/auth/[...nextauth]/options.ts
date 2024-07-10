@@ -20,6 +20,9 @@ interface CustomUser {
 
 export const authOptions: NextAuthOptions = {
   // debug: true,
+  session:{
+    strategy:"jwt"
+  },
   providers: [
     // CredentialsProvider({
     //     name: 'Credentials',
@@ -37,12 +40,13 @@ export const authOptions: NextAuthOptions = {
     //         }
     //     }
     // })
-
+    
     // GoogleProvider({}),
-    GithubProvider({
-      clientId: process.env.GITHUB_APP_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_APP_SECRET as string,
-    }),
+    // GithubProvider({
+    //   clientId: process.env.GITHUB_APP_CLIENT_ID as string,
+    //   clientSecret: process.env.GITHUB_APP_SECRET as string,
+    //   allowDangerousEmailAccountLinking: true,
+    // }),
     GoogleProvider({
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT as string,
       clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET as string,
@@ -56,6 +60,7 @@ export const authOptions: NextAuthOptions = {
     //     return token;
     //   },
     // }
+    
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`
@@ -76,12 +81,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account, user }) {
       console.log("Calling JWT")
       console.log(token);
+      console.log("Account",account)
       console.log(user)
 
       return token;
     },
     async session({ session, token, user }) {
-      console.log("Calling Session")
+      console.log("Calling Session");
+      console.log("token in session",token);
       console.log(user)
       if (user && user.id) {
         session.user.id = user.id;
