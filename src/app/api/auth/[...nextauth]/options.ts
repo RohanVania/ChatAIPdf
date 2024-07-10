@@ -20,9 +20,9 @@ interface CustomUser {
 
 export const authOptions: NextAuthOptions = {
   // debug: true,
-  session:{
-    strategy:"jwt"
-  },
+  // session:{
+  //   strategy:"jwt"
+  // },
   providers: [
     // CredentialsProvider({
     //     name: 'Credentials',
