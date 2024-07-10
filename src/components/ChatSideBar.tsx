@@ -6,7 +6,7 @@ import { FaAngleDoubleRight } from "react-icons/fa";
 import { GoPlusCircle } from "react-icons/go";
 import { TbMessageCircle } from "react-icons/tb";
 import { Button } from './ui/button';
-import React from "react";
+import React,{useEffect} from "react";
 import { DrizzleChatPDF, chatPdf } from "@/lib/db/schema"
 import Link from "next/link"
 import { cn } from "@/lib/utils";
@@ -24,6 +24,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
 
 
     const [isOpen, setIsOpen] = useState(true);
+    
 
     const sidebarVariants = {
         open: {
@@ -95,13 +96,19 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setIsOpen(true); // Set isVisible to true after 2000ms
+        }, 2000);
 
+        return () => clearTimeout(timeout); // Clear the timeout on component unmount
+    }, []);
     return (
         <>
             {
                 !isOpen &&
-                <div className='p-2  justify-between items-center  absolute top-[8px] left-[8px] z-[10] '>
-                    <div className=" ml-auto rounded-full overflow-hidden">
+                <div className='p-2  justify-between items-center  absolute top-[23px] left-[20px] z-[10] '>
+                    <div className=" ml-auto rounded-ful overflow-hidden">
 
                         <FaAngleDoubleRight className={` text-[#5900F2] bg-white text-4xl p-2 rounded-full  cursor-pointer border-[2px]   `} onClick={toggleSidebar} />
                     </div>
@@ -115,11 +122,11 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
                 variants={sidebarVariants}
             >
 
-                <div className='p-4 flex justify-between items-center '>
-                    <div className="w-[40px] aspect-square  rounded-lg overflow-hidden cursor-pointer" onClick={() => { router.push("/") }}>
+                <div className='p-3 flex justify-between items-center  mt-12 '>
+                    <div className="w-[40px] aspect-square  rounded-lg overflow-hidden  absolute cursor-pointer top-[30px] right-[10px] ml-auto" onClick={() => { router.push("/") }}>
                         <Image src={logo} alt="logo-pdf" className="rounded-lg w-full h-full " />
                     </div>
-                    <div className=" ml-aut ">
+                    <div className=" ml-aut absolute  top-[30px] left-[27px] ">
                         <FaAngleDoubleLeft className={` text-[#5900f2]  text-4xl p-2 rounded-full bg-white cursor-pointer `} onClick={toggleSidebar} />
                     </div>
                 </div>
