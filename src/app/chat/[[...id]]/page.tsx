@@ -37,16 +37,16 @@ async function Chat({ params }: Props) {
 
 
 
-  if (!session) {
-    console.log("You are not allowed to see this page");
-    redirect("http://localhost:3000/")
-  }
+  // if (!session) {
+  //   console.log("You are not allowed to see this page");
+  //   redirect("http://localhost:3000/")
+  // }
 
   const userId = session?.user.id;
   const providername = session?.user.provider;
-  if (!userId) {
-    return redirect("/signIn")
-  }
+  // if (!userId) {
+  //   return redirect("/signIn")
+  // }
 
   const AllpdfForAUser = await getData(userId as string, providername as string);
 
