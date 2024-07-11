@@ -25,7 +25,7 @@ export default async function RootLayout({
   //  console.log("SERVER SESSION",await getServerSession());
 
   const serverSession = await getServerSession(authOptions);
-  console.log("Layout Check of Session =>",serverSession);
+  // console.log("Layout Check of Session =>",serverSession);
   
   return (
     <Providers session={serverSession} >

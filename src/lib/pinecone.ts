@@ -47,51 +47,52 @@ export const connectedToIndex = pinecone.Index(process.env.NEXT_PUBLIC_PINECONE_
  * 
  */
 
-export async function loadS3toPinecone(filekey: string) {
-    try {
+// export async function loadS3toPinecone(filekey: string) {
+//     try {
 
-        //*1. Obtain the pdf => download and read from pdf
-        const langchainLoader = await downloadFromS3(filekey);
-        const loadedData = await langchainLoader?.load() as PdfPage[];
+//         //*1. Obtain the pdf => download and read from pdf
+//         const langchainLoader = await downloadFromS3(filekey);
+//         console.log(langchainLoader);
+//         const loadedData = await langchainLoader?.load() as PdfPage[];
 
-        //*2 Split and segment the pdf
-        const documents = await Promise.all(loadedData.map(prepareDocument));
-        // console.log("Documents +>", documents);
+//         //*2 Split and segment the pdf
+//         const documents = await Promise.all(loadedData.map(prepareDocument));
+//         // console.log("Documents +>", documents);
 
-        //* 3 Vectorize and embed documents
-        const vector = await Promise.all(documents.flat().map(embedDocument));
-        //    console.log("Vectors =>",vector);
+//         //* 3 Vectorize and embed documents
+//         const vector = await Promise.all(documents.flat().map(embedDocument));
+//         //    console.log("Vectors =>",vector);
 
-        //* 4 Upload  Vector to Pinecone
-        // console.log("File Key =>", filekey);
-        const asciiFileKey = convertToAscii(filekey);
-        // console.log("Ascii File key", asciiFileKey)
-        const vectorInPinecone = await connectedToIndex.namespace(asciiFileKey).upsert(vector)
-        console.log("Vector In Pinecone =>",vectorInPinecone)
-        // console.log(documents[0])
-        fs.unlinkSync(langchainLoader?.filePathOrBlob as string);
-        return documents[0];
+// //         //* 4 Upload  Vector to Pinecone
+//         // console.log("File Key =>", filekey);
+//         const asciiFileKey = convertToAscii(filekey);
+//         // console.log("Ascii File key", asciiFileKey)
+//         const vectorInPinecone = await connectedToIndex.namespace(asciiFileKey).upsert(vector)
+//         // console.log("Vector In Pinecone =>",vectorInPinecone)
+//         // console.log(documents[0])
+//         // fs.unlinkSync(langchainLoader?.filePathOrBlob as string);
+//         return documents[0];
 
-    } catch (err) {
-        console.log("Err in LoadS3toPineCone =>", err)
-    }
+//     } catch (err) {
+//         console.log("Err in LoadS3toPineCone =>", err)
+//     }
 
-}
+// }
 
 
-/**
- * 
- * @param page 
- * We create chunks of small small text for better vector embedding, basically we segment each pages 
- * @return [
-[
-    Document {
-      pageContent: 'My Tiny Guide to Shadcn, Radix,and TailwindMairaj Pirzada·Follow3 min read·Nov 3, 20233615/7/24, 11:22 AMMy Tiny Guide to Shadcn, Radix, and Tailwind | by Mairaj Pirzada | Mediumhttps://medium.com/@immairaj/my-tiny-guide-to-shadcn-radix-and-tailwind-da50fce3140a#:~:text=The key difference between Radix,to use in your pr...1/8',
-      metadata: [Object]
-    }
-]
-]
- */
+// /**
+//  * 
+//  * @param page 
+//  * We create chunks of small small text for better vector embedding, basically we segment each pages 
+//  * @return [
+// [
+//     Document {
+//       pageContent: 'My Tiny Guide to Shadcn, Radix,and TailwindMairaj Pirzada·Follow3 min read·Nov 3, 20233615/7/24, 11:22 AMMy Tiny Guide to Shadcn, Radix, and Tailwind | by Mairaj Pirzada | Mediumhttps://medium.com/@immairaj/my-tiny-guide-to-shadcn-radix-and-tailwind-da50fce3140a#:~:text=The key difference between Radix,to use in your pr...1/8',
+//       metadata: [Object]
+//     }
+// ]
+// ]
+//  */
 
 export const prepareDocument = async (page: PdfPage) => {
     let { pageContent, metadata } = page;
@@ -116,13 +117,40 @@ export const prepareDocument = async (page: PdfPage) => {
 
 }
 
+export async function loadS3toPinecone(filekey: string) {
+    try {
+
+        //*1. Obtain the pdf => download and read from pdf
+        const langchainLoader = await downloadFromS3(filekey);
+        console.log("Lang Chain Loader",langchainLoader);
+        const loadedData = await langchainLoader?.load() as PdfPage[];
+
+        //*2 Split and segment the pdf
+        const documents = await Promise.all(loadedData.map(prepareDocument));
+        console.log("Documents +>", documents);
+
+        //* 3 Vectorize and embed documents
+        const vector = await Promise.all(documents.flat().map(embedDocument));
+
+        //* 4 Upload  Vector to Pinecone
+        const asciiFileKey = convertToAscii(filekey);
+        const vectorInPinecone = await connectedToIndex.namespace(asciiFileKey).upsert(vector)
+        console.log("Vector In Pinecone =>",vectorInPinecone)
+        console.log(documents[0])
+        return documents;
 
 
-/**
- * 
- * @param doc 
- * This Function creates a vector Embedding
- */
+    } catch (err) {
+        console.log("Err in LoadS3toPineCone =>", err)
+    }
+
+}
+
+// /**
+//  * 
+//  * @param doc 
+//  * This Function creates a vector Embedding
+//  */
 async function embedDocument(doc: Document): Promise<Vector> {
     try {
         const embeddings = await getEmbeddings(doc.pageContent);
@@ -135,7 +163,7 @@ async function embedDocument(doc: Document): Promise<Vector> {
                 pageNumber: doc.metadata.pageNumber as number
             }
         };
-        console.log("Vector ",vector);
+        console.log("Pine Cone Vector ",vector);
         return vector;
     } catch (err) {
         console.log("Error in Vector Embedding", err);
@@ -147,3 +175,5 @@ export const truncateStringByBytes = (str: string, bytes: number) => {
     const enc = new TextEncoder();
     return new TextDecoder('utf-8').decode(enc.encode(str).slice(0, bytes))
 }
+
+

@@ -7,7 +7,7 @@ import {getObjectUrl} from "@/lib/s3"
 export async function POST(request:Request,response:Response){
     try{
         const {filename,filekey,userid,userprovider}=await request.json();
-
+        // console.log(filename,filekey,userid,userprovider)
         //* This store the data in Pinecone db which is a vector database used for AI operation for matching
         const data=await loadS3toPinecone(filekey);
 
@@ -22,7 +22,9 @@ export async function POST(request:Request,response:Response){
             insertId:chatPdf.id
         })
 
-        return NextResponse.json({message:"Success",status:200,pages:data,databaseUpload:result})
+        return NextResponse.json({message:"Success",status:200,pages:data,
+            databaseUpload:result
+        })
 
     }catch(err){ 
         console.log(err)
