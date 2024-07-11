@@ -16,10 +16,10 @@ type Props = {
   }
 }
 
-async function getData(userid: string,providername:string) {
+async function getData(userid: string, providername: string) {
   const res = await axios.post(Routes.getpdfData, {
     userid: userid,
-    provider:providername
+    provider: providername
   }
   );
   return res.data.res as DrizzleChatPDF[]
@@ -29,21 +29,26 @@ async function getData(userid: string,providername:string) {
 async function Chat({ params }: Props) {
 
   //* This will be the authentication Id using some authentication eg clerk,  
+  // const session = await getServerSession(authOptions);
   const session = await getServerSession(authOptions);
-  console.log("session",session)
+  // console.log("session details", session)
+  // const session2 = await getServerSession();
+  // console.log("Session 2=>", session2)
 
-  // if (!session) {
-  //   console.log("You are not allowed to see this page");
-  //   redirect("/")
-  // }
+
+
+  if (!session) {
+    console.log("You are not allowed to see this page");
+    redirect("http://localhost:3000/")
+  }
 
   const userId = session?.user.id;
-  const providername=session?.user.provider;
+  const providername = session?.user.provider;
   if (!userId) {
     return redirect("/signIn")
   }
 
-  const AllpdfForAUser = await getData(userId as string,providername as string);
+  const AllpdfForAUser = await getData(userId as string, providername as string);
 
   if (params?.id?.length > 1) {
     return redirect("/error")
@@ -81,7 +86,7 @@ async function Chat({ params }: Props) {
               !id ?
                 <FileUpload classname='h-[100%] ' />
                 :
-                 <ChatPdfViewer pdf_url={activePdf?.pdfUrl} />
+                <ChatPdfViewer pdf_url={activePdf?.pdfUrl} />
             }
           </div>
 

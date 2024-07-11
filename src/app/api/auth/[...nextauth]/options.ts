@@ -19,28 +19,12 @@ interface CustomUser {
 
 
 export const authOptions: NextAuthOptions = {
-  // debug: true,
-  // session:{
-  //   strategy:"jwt"
-  // },
+  debug: true,
+  session:{
+    strategy:"database"
+  },
   providers: [
-    // CredentialsProvider({
-    //     name: 'Credentials',
-    //     credentials: {
-    //         username: { label: "Username", type: "text", placeholder: "johndoe" },
-    //         password: { label: "Password", type: "password" }
-    //     },
-    //     async authorize(credentials, req) {
-    //         const user = { id: "42", name: "Dave", password: "1234", buddy: "ssup" };
-    //         if (credentials?.username === user.name && credentials?.password === user.password) {
-    //             console.log(user)
-    //             return user;
-    //         } else {
-    //             return null;
-    //         }
-    //     }
-    // })
-    
+ 
     // GoogleProvider({}),
     // GithubProvider({
     //   clientId: process.env.GITHUB_APP_CLIENT_ID as string,
@@ -55,11 +39,7 @@ export const authOptions: NextAuthOptions = {
 
 
   callbacks: {
-    //   async jwt({ user, account, token }) {
-    //     console.log("JWT IS CALLED -<", user, account, token);
-    //     return token;
-    //   },
-    // }
+ 
     
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
@@ -69,23 +49,6 @@ export const authOptions: NextAuthOptions = {
       return baseUrl
     },
 
-    // async signIn({ user, account, profile, email, credentials }) {
-    //   console.log("Calling Sign IN")
-    //   return true;
-    // },
-    // async redirect({ url, baseUrl }) {
-    //   console.log("Calling Redirect")
-
-    //   return url.startsWith(baseUrl) ? url : baseUrl;
-    // },
-    async jwt({ token, account, user }) {
-      console.log("Calling JWT")
-      console.log(token);
-      console.log("Account",account)
-      console.log(user)
-
-      return token;
-    },
     async session({ session, token, user }) {
       console.log("Calling Session");
       console.log("token in session",token);
