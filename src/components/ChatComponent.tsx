@@ -16,7 +16,7 @@ type Props = {
 
 const callToMessagesApi = async (chatid: number) => {
   try {
-    const apiresult = await fetch('http://localhost:3000/api/getMessages', {
+    const apiresult = await fetch('https://aichat-pdf.vercel.app/api/getMessages', {
       method: 'POST',
       body: JSON.stringify({ chatid: chatid }),
     })
