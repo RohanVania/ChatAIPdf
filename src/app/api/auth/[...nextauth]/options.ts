@@ -19,7 +19,7 @@ interface CustomUser {
 
 
 export const authOptions: NextAuthOptions = {
-  debug: true,
+  // debug: true,
   session:{
     strategy:"database"
   },
@@ -50,14 +50,14 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token, user }) {
-      console.log("Calling Session");
-      console.log("token in session",token);
-      console.log(user)
+      // console.log("Calling Session");
+      // console.log("token in session",token);
+      // console.log(user)
       if (user && user.id) {
         session.user.id = user.id;
         session.user.provider = user.image?.includes('google') ? 'google' : 'github';
       }
-      console.log(session);
+      // console.log(session);
       return session;
     },
 
