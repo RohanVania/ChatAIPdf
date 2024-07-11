@@ -28,81 +28,81 @@ async function getData(userid: string, providername: string) {
 
 async function Chat({ params }: Props) {
 
-  //* This will be the authentication Id using some authentication eg clerk,  
-  // const session = await getServerSession(authOptions);
-  const session = await getServerSession(authOptions);
-  // console.log("session details", session)
-  // const session2 = await getServerSession();
-  // console.log("Session 2=>", session2)
+    //* This will be the authentication Id using some authentication eg clerk,  
+    // const session = await getServerSession(authOptions);
+const session=    await getServerSession(authOptions);
+    // console.log("session details", session)
+    // const session2 = await getServerSession();
+    // console.log("Session 2=>", session2)
+
+    
+
+    if (!session) {
+      console.log("You are not allowed to see this page");
+      redirect("/")
+    }
+
+    const userId = session?.user.id;
+    const providername = session?.user.provider;
+    if (!userId) {
+      return redirect("/signIn")
+    }
+
+    const AllpdfForAUser = await getData(userId as string, providername as string);
+
+    if (params?.id?.length > 1) {
+      return redirect("/error")
+    }
+
+    const id = params?.id
+
+    let activePdf;
+    if (!params.id) {
+      activePdf = null
+    }
+
+    else {
+      activePdf = AllpdfForAUser.find((chat: DrizzleChatPDF) => chat.id === parseInt(params?.id[0]));
+    }
 
 
+    return (
+      <section className=' max-h-screen w-full  relative  h-screen overflow-y-auto '>
+        <div className='w-full h-full  flex    relative'>
 
-  // if (!session) {
-  //   console.log("You are not allowed to see this page");
-  //   redirect("http://localhost:3000/")
-  // }
-
-  const userId = session?.user.id;
-  const providername = session?.user.provider;
-  // if (!userId) {
-  //   return redirect("/signIn")
-  // }
-
-  const AllpdfForAUser = await getData(userId as string, providername as string);
-
-  if (params?.id?.length > 1) {
-    return redirect("/error")
-  }
-
-  const id = params?.id
-
-  let activePdf;
-  if (!params.id) {
-    activePdf = null
-  }
-
-  else {
-    activePdf = AllpdfForAUser.find((chat: DrizzleChatPDF) => chat.id === parseInt(params?.id[0]));
-  }
-
-
-  return (
-    <section className=' max-h-screen w-full  relative  h-screen overflow-y-auto '>
-      <div className='w-full h-full  flex    relative'>
-
-        {/* Chat Side Bar */}
-        <div className='h-full flex-1  max-h-scree absolute lg:relativ z-40 '>
-          <ChatSideBar
-            allChatPdfForGivenUser={AllpdfForAUser}
-            activePdfId={activePdf?.id}
-          />
-        </div>
-
-        {/* Chat Pdf Viewer */}
-        <div className='flex w-full justify-between chatbar-wrap:justify-center flex-col flex-wrap pdfwrap:flex-row pdfwrap:flex-wrap   gap-x-[50px]  overflow-y-aut h-full '>
-
-          <div className='  w-full max-w-[810px] max-h-full  mx-auto  h-[400px] pdfwrap:h-full '>
-            {
-              !id ?
-                <FileUpload classname='h-[100%] ' />
-                :
-                <ChatPdfViewer pdf_url={activePdf?.pdfUrl} />
-            }
-          </div>
-
-          {/* Chat Component */}
-          <div className='  flex-1 w-full whitespace-normal break-words h-full max-h-screen   chatbar-wrap:max-h-[440px] overflow-y-hidden'>
-            <ChatComponent
-              activeId={activePdf?.id}
-            // chatid={chats[0].id} 
+          {/* Chat Side Bar */}
+          <div className='h-full flex-1  max-h-scree absolute lg:relativ z-40 '>
+            <ChatSideBar
+              allChatPdfForGivenUser={AllpdfForAUser}
+              activePdfId={activePdf?.id}
             />
           </div>
+
+          {/* Chat Pdf Viewer */}
+          <div className='flex w-full justify-between chatbar-wrap:justify-center flex-col flex-wrap pdfwrap:flex-row pdfwrap:flex-wrap   gap-x-[50px]  overflow-y-aut h-full '>
+
+            <div className='  w-full max-w-[810px] max-h-full  mx-auto  h-[400px] pdfwrap:h-full '>
+              {
+                !id ?
+                  <FileUpload classname='h-[100%] ' />
+                  :
+                  <ChatPdfViewer pdf_url={activePdf?.pdfUrl} />
+              }
+            </div>
+
+            {/* Chat Component */}
+            <div className='  flex-1 w-full whitespace-normal break-words h-full max-h-screen   chatbar-wrap:max-h-[440px] overflow-y-hidden'>
+              <ChatComponent
+                activeId={activePdf?.id}
+              // chatid={chats[0].id} 
+              />
+            </div>
+          </div>
+
         </div>
 
-      </div>
-
-    </section>
-  )
+      </section>
+    )
 }
 
 export default Chat
