@@ -14,6 +14,7 @@ const queryclient = new QueryClient({
 });
 
 const Providers = ({ children,session }: Props) => {
+    console.log("Session in Provider",session)
     return (
 
         <QueryClientProvider client={queryclient}>
