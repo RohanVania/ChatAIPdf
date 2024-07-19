@@ -23,7 +23,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
     const router = useRouter();
 
 
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     
 
     const sidebarVariants = {

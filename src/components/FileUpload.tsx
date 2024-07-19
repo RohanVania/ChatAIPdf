@@ -9,6 +9,7 @@ import { Routes } from "@/lib/routes/index"
 import toast from 'react-hot-toast';
 import { redirect, useRouter} from "next/navigation" 
 import { useSession } from "next-auth/react";
+import { stat } from "fs";
 
 type Props = {
     classname?:string
@@ -24,7 +25,7 @@ const FileUpload = (props: Props) => {
     const router=useRouter();
     const {data,status}=useSession();
 
-    
+    console.log(data,status)
 
     const userIDFROMSESSION=data?.user.id;
     const userPROVIDERNAMEFROMSESSION=data?.user.provider;
@@ -62,11 +63,16 @@ const FileUpload = (props: Props) => {
 
         //* When we drop the file it gets uploaded in S3
         onDrop: async (file) => {
+            //* If we try to upload a file without login
+            if(data===null && status ==='unauthenticated'){
+                toast.error("Please login to upload ",{id:'error-1'})
+                return
+            }
+
             console.log(file);
             if(data==null || status!=='authenticated'){
                 router.push('/chat');
                 return
-                
             }
             const res = await upload(file[0]);
             // console.log("Data that upload function returned",res);
