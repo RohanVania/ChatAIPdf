@@ -52,7 +52,7 @@ export default function Home() {
               <Button className="flex items-center gap-3" onClick={() => router.push("/signIn")} >Log In to Get Started <HiMiniArrowRightStartOnRectangle className="text-[20px]"/></Button>
             }
 
-            {status === 'authenticated' &&
+            { status === 'authenticated' &&
               <div className="relative z-[100]">
                 <div className="w-[52px] aspect-square   top-0  rounded-full overflow-hidden ml-4 cursor-pointer" onClick={toggleDropDown}>
                   <Image src={data?.user?.image as string} className="object-cover bg-top" alt="Person-Image" width={52} height={52} />

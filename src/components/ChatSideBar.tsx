@@ -96,24 +96,23 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setIsOpen(true); // Set isVisible to true after 2000ms
-        }, 2000);
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //         setIsOpen(false); // Set isVisible to true after 2000ms
+    //     }, 2000);
 
-        return () => clearTimeout(timeout); // Clear the timeout on component unmount
-    }, []);
+    //     return () => clearTimeout(timeout); // Clear the timeout on component unmount
+    // }, [isOpen]);
     return (
         <>
             {
-                !isOpen &&
+                !isOpen ?
                 <div className='p-2  justify-between items-center  absolute top-[23px] left-[20px] z-[10] '>
                     <div className=" ml-auto rounded-ful overflow-hidden">
-
                         <FaAngleDoubleRight className={` text-[#5900F2] bg-white text-4xl p-2 rounded-full  cursor-pointer border-[2px]   `} onClick={toggleSidebar} />
                     </div>
                 </div>
-            }
+            :
 
             <motion.div
                 className='h-scree h-full  bg-gray-900 max-w-[255px] text-gray-200 relative  overflow-hidden '
@@ -193,6 +192,7 @@ const ChatSideBar = ({ allChatPdfForGivenUser, activePdfId }: Props) => {
 
 
             </motion.div>
+}
         </>
     );
 };
